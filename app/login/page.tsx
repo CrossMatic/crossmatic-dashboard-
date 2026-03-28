@@ -82,7 +82,7 @@ export default function LoginPage() {
       <motion.div
         initial={{ scale: 0.95, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
-        className="relative z-10 w-full max-w-md bg-white rounded-2xl shadow-2xl p-8 flex flex-col gap-6"
+        className="relative z-10 w-full max-w-md bg-white rounded-2xl shadow-2xl p-6 sm:p-8 flex flex-col gap-6 mx-4 sm:mx-0"
       >
         <h2 className="text-2xl font-bold text-center text-gray-900">Willkommen zurück</h2>
 
