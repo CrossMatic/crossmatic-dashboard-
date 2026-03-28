@@ -7,7 +7,6 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
-import Image from "next/image";
 
 interface ConfettiParticle {
   id: number;
@@ -79,21 +78,11 @@ export default function LoginPage() {
         ))}
       </AnimatePresence>
 
-      {/* Logo above card */}
-      <div className="relative z-10 flex flex-col items-center w-full max-w-md">
-        <Image
-          src="/crossmatic-logo.png"
-          alt="CrossMatic Logo"
-          width={72}
-          height={72}
-          className="mb-6"
-        />
-
       {/* Login Card */}
       <motion.div
         initial={{ scale: 0.95, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
-        className="w-full bg-white rounded-2xl shadow-2xl p-8 flex flex-col gap-6"
+        className="relative z-10 w-full max-w-md bg-white rounded-2xl shadow-2xl p-8 flex flex-col gap-6"
       >
         <h2 className="text-2xl font-bold text-center text-gray-900">Willkommen zurück</h2>
 
@@ -143,7 +132,6 @@ export default function LoginPage() {
           Kein Account? Kontaktieren Sie uns.
         </p>
       </motion.div>
-      </div>
     </div>
   );
 }
