@@ -34,15 +34,7 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 bg-gray-50">
-
-      {/* Subtiler blauer Glow oben */}
-      <div
-        className="fixed top-0 left-1/2 -translate-x-1/2 w-[800px] h-[300px] pointer-events-none"
-        style={{
-          background: "radial-gradient(ellipse, hsl(210, 100%, 65%, 0.12) 0%, transparent 70%)",
-        }}
-      />
+    <div className="min-h-screen flex items-center justify-center px-4 bg-white">
 
       <motion.div
         initial={{ opacity: 0, y: 16 }}
@@ -50,15 +42,11 @@ export default function LoginPage() {
         transition={{ duration: 0.4, ease: "easeOut" }}
         className="w-full max-w-sm relative z-10"
       >
-        {/* Logo */}
-        <div className="flex justify-center mb-8">
-          <span className="text-2xl font-bold tracking-tight text-gray-900">
-            Cross<span style={{ color: "hsl(210, 100%, 55%)" }}>Matic</span>
-          </span>
-        </div>
-
         {/* Card */}
-        <div className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
+        <div
+          className="bg-white rounded-2xl p-8 border border-gray-100"
+          style={{ boxShadow: "0 8px 48px 0 rgba(0,0,0,0.13), 0 2px 8px 0 rgba(0,0,0,0.07)" }}
+        >
           <h1 className="text-xl font-semibold text-gray-900 mb-1">
             Willkommen zurück
           </h1>
@@ -117,7 +105,7 @@ export default function LoginPage() {
         </div>
 
         <p className="text-center text-xs mt-6 text-gray-400">
-          Kein Account? Kontaktieren Sie CrossMatic.
+          Kein Account? Kontaktieren Sie uns.
         </p>
       </motion.div>
     </div>
