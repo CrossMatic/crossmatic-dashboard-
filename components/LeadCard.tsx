@@ -37,7 +37,7 @@ export default function LeadCard({ lead }: { lead: Lead }) {
   return (
     <div
       className="surface-glow-hover rounded-2xl border border-white/10 bg-white/5 flex flex-col overflow-hidden"
-      style={{ backgroundColor: "#02040a" }}
+      style={{ backgroundColor: "#0d1118" }}
     >
       {/* Header */}
       <div className="p-6 pb-4">
