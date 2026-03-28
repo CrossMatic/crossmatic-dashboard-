@@ -28,7 +28,6 @@ interface Lead {
 const FG     = "hsl(210, 40%, 98%)";   // near-white — all main text
 const MUTED  = "hsl(215, 20%, 65%)";   // supporting text
 const DIM    = "hsl(215, 20%, 45%)";   // labels / de-emphasized
-const BORDER = "hsl(220, 30%, 20%)";
 const ACCENT = "hsl(210, 100%, 65%)";
 
 export default function LeadCard({ lead }: { lead: Lead }) {
@@ -37,8 +36,8 @@ export default function LeadCard({ lead }: { lead: Lead }) {
 
   return (
     <div
-      className="surface-glow-hover rounded-xl border flex flex-col overflow-hidden"
-      style={{ backgroundColor: "hsl(220, 30%, 14%)", borderColor: BORDER }}
+      className="surface-glow-hover rounded-2xl border border-white/10 bg-white/5 flex flex-col overflow-hidden"
+      style={{ backgroundColor: "#02040a" }}
     >
       {/* Header */}
       <div className="p-6 pb-4">
@@ -93,7 +92,7 @@ export default function LeadCard({ lead }: { lead: Lead }) {
         )}
       </div>
 
-      <div className="h-px mx-6" style={{ backgroundColor: BORDER }} />
+      <div className="h-px mx-6 bg-white/10" />
 
       {/* Kontaktperson */}
       <div className="p-6 py-4 space-y-2.5">
@@ -148,7 +147,7 @@ export default function LeadCard({ lead }: { lead: Lead }) {
       {/* Analyse Accordion */}
       {hasAnalyse && (
         <>
-          <div className="h-px mx-6" style={{ backgroundColor: BORDER }} />
+          <div className="h-px mx-6 bg-white/10" />
           <button
             onClick={() => setAnalyseOpen((v) => !v)}
             className="flex items-center justify-between px-6 py-3.5 text-sm font-medium w-full text-left cursor-pointer transition-colors hover:bg-white/5"
