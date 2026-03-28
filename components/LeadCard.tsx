@@ -30,32 +30,35 @@ export default function LeadCard({ lead }: { lead: Lead }) {
   const hasAnalyse = lead.fit_description || lead.pain_point || lead.intent_signal;
 
   return (
-    <div className="bg-white rounded-xl border border-gray-100 flex flex-col overflow-hidden transition-all duration-200 hover:shadow-md hover:border-gray-200">
-
+    <div className="rounded-xl border flex flex-col overflow-hidden transition-all duration-200"
+      style={{ background: "#1a1a1a", borderColor: "#2a2a2a" }}
+      onMouseEnter={(e) => {
+        (e.currentTarget as HTMLDivElement).style.borderColor = "#3f3f46";
+      }}
+      onMouseLeave={(e) => {
+        (e.currentTarget as HTMLDivElement).style.borderColor = "#2a2a2a";
+      }}
+    >
       {/* Header */}
       <div className="p-6 pb-4">
         <div className="flex items-start justify-between gap-3">
           <div className="flex items-center gap-3 min-w-0">
             {lead.logo_url ? (
-              <img
-                src={lead.logo_url}
-                alt={`${lead.company_name} Logo`}
-                className="w-10 h-10 rounded-lg object-contain shrink-0 border border-gray-100"
-              />
+              <img src={lead.logo_url} alt={`${lead.company_name} Logo`}
+                className="w-10 h-10 rounded-lg object-contain shrink-0"
+                style={{ background: "#262626" }} />
             ) : (
-              <div
-                className="w-10 h-10 rounded-lg flex items-center justify-center shrink-0 text-sm font-bold"
-                style={{ background: "hsl(210, 100%, 55%, 0.1)", color: "hsl(210, 100%, 50%)" }}
-              >
+              <div className="w-10 h-10 rounded-lg flex items-center justify-center shrink-0 text-sm font-bold"
+                style={{ background: "rgba(255,255,255,0.06)", color: "#a1a1aa" }}>
                 {lead.company_name.charAt(0).toUpperCase()}
               </div>
             )}
             <div className="min-w-0">
-              <h2 className="text-base font-semibold leading-tight text-gray-900 truncate">
+              <h2 className="text-base font-semibold leading-tight text-white truncate">
                 {lead.company_name}
               </h2>
               {lead.industry && (
-                <span className="text-xs text-gray-400">{lead.industry}</span>
+                <span className="text-xs" style={{ color: "#52525b" }}>{lead.industry}</span>
               )}
             </div>
           </div>
@@ -64,48 +67,44 @@ export default function LeadCard({ lead }: { lead: Lead }) {
 
         <div className="flex items-center gap-4 mt-3 flex-wrap">
           {lead.website && (
-            <a
-              href={lead.website.startsWith("http") ? lead.website : `https://${lead.website}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-xs hover:underline"
-              style={{ color: "hsl(210, 100%, 50%)" }}
-            >
+            <a href={lead.website.startsWith("http") ? lead.website : `https://${lead.website}`}
+              target="_blank" rel="noopener noreferrer"
+              className="text-xs hover:underline" style={{ color: "hsl(210, 100%, 65%)" }}>
               🌐 {lead.website.replace(/^https?:\/\//, "")}
             </a>
           )}
           {lead.location && (
-            <span className="text-xs text-gray-400">📍 {lead.location}</span>
+            <span className="text-xs" style={{ color: "#52525b" }}>📍 {lead.location}</span>
           )}
         </div>
 
         {lead.description && (
-          <p className="text-sm leading-relaxed mt-3 text-gray-500">{lead.description}</p>
+          <p className="text-sm leading-relaxed mt-3" style={{ color: "#71717a" }}>
+            {lead.description}
+          </p>
         )}
       </div>
 
-      {/* Divider */}
-      <div className="h-px mx-6 bg-gray-100" />
+      <div className="h-px mx-6" style={{ background: "#2a2a2a" }} />
 
       {/* Kontaktperson */}
       <div className="p-6 py-4 space-y-2">
-        <p className="text-xs font-medium uppercase tracking-wider text-gray-400 mb-3">
+        <p className="text-xs font-medium uppercase tracking-wider mb-3" style={{ color: "#3f3f46" }}>
           Entscheiderperson
         </p>
-
         {lead.contact_name && (
           <div className="flex items-center gap-2.5">
             <span className="text-sm">👤</span>
-            <span className="text-sm font-medium text-gray-800">{lead.contact_name}</span>
+            <span className="text-sm font-medium text-white">{lead.contact_name}</span>
             {lead.contact_position && (
-              <span className="text-xs text-gray-400">· {lead.contact_position}</span>
+              <span className="text-xs" style={{ color: "#52525b" }}>· {lead.contact_position}</span>
             )}
           </div>
         )}
         {lead.contact_email && (
           <div className="flex items-center gap-2.5">
             <span className="text-sm">✉️</span>
-            <a href={`mailto:${lead.contact_email}`} className="text-sm text-gray-600 hover:underline">
+            <a href={`mailto:${lead.contact_email}`} className="text-sm hover:underline" style={{ color: "#a1a1aa" }}>
               {lead.contact_email}
             </a>
           </div>
@@ -113,7 +112,7 @@ export default function LeadCard({ lead }: { lead: Lead }) {
         {lead.phone && (
           <div className="flex items-center gap-2.5">
             <span className="text-sm">📞</span>
-            <a href={`tel:${lead.phone}`} className="text-sm text-gray-600 hover:underline">
+            <a href={`tel:${lead.phone}`} className="text-sm hover:underline" style={{ color: "#a1a1aa" }}>
               {lead.phone}
             </a>
           </div>
@@ -121,13 +120,8 @@ export default function LeadCard({ lead }: { lead: Lead }) {
         {lead.linkedin_url && (
           <div className="flex items-center gap-2.5">
             <span className="text-sm">🔗</span>
-            <a
-              href={lead.linkedin_url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-sm hover:underline"
-              style={{ color: "hsl(210, 100%, 50%)" }}
-            >
+            <a href={lead.linkedin_url} target="_blank" rel="noopener noreferrer"
+              className="text-sm hover:underline" style={{ color: "hsl(210, 100%, 65%)" }}>
               LinkedIn-Profil
             </a>
           </div>
@@ -135,10 +129,8 @@ export default function LeadCard({ lead }: { lead: Lead }) {
         {lead.preferred_contact_channel && (
           <div className="flex items-center gap-2.5 mt-1">
             <span className="text-sm">💬</span>
-            <span
-              className="text-xs px-2 py-0.5 rounded-md"
-              style={{ background: "hsl(210, 100%, 50%, 0.08)", color: "hsl(210, 100%, 45%)" }}
-            >
+            <span className="text-xs px-2 py-0.5 rounded-md"
+              style={{ background: "rgba(255,255,255,0.05)", color: "#71717a" }}>
               Empfohlen: {lead.preferred_contact_channel}
             </span>
           </div>
@@ -148,11 +140,10 @@ export default function LeadCard({ lead }: { lead: Lead }) {
       {/* Analyse Accordion */}
       {hasAnalyse && (
         <>
-          <div className="h-px mx-6 bg-gray-100" />
-          <button
-            onClick={() => setAnalyseOpen((v) => !v)}
-            className="flex items-center justify-between px-6 py-3.5 text-sm font-medium text-gray-400 hover:text-gray-600 transition-colors cursor-pointer w-full text-left"
-          >
+          <div className="h-px mx-6" style={{ background: "#2a2a2a" }} />
+          <button onClick={() => setAnalyseOpen((v) => !v)}
+            className="flex items-center justify-between px-6 py-3.5 text-sm font-medium transition-colors hover:bg-white/[0.02] cursor-pointer w-full text-left"
+            style={{ color: "#52525b" }}>
             <span>Analyse anzeigen</span>
             {analyseOpen ? <ChevronUp size={15} /> : <ChevronDown size={15} />}
           </button>
@@ -161,26 +152,27 @@ export default function LeadCard({ lead }: { lead: Lead }) {
             <div className="px-6 pb-6 space-y-4">
               {lead.fit_description && (
                 <div>
-                  <p className="text-xs font-medium uppercase tracking-wider mb-1.5" style={{ color: "hsl(210, 100%, 50%)" }}>
+                  <p className="text-xs font-medium uppercase tracking-wider mb-1.5" style={{ color: "hsl(210, 100%, 65%)" }}>
                     Agentur-Fit
                   </p>
-                  <p className="text-sm leading-relaxed text-gray-600">{lead.fit_description}</p>
+                  <p className="text-sm leading-relaxed" style={{ color: "#71717a" }}>{lead.fit_description}</p>
                 </div>
               )}
               {lead.pain_point && (
                 <div>
-                  <p className="text-xs font-medium uppercase tracking-wider mb-1.5" style={{ color: "hsl(210, 100%, 50%)" }}>
+                  <p className="text-xs font-medium uppercase tracking-wider mb-1.5" style={{ color: "hsl(210, 100%, 65%)" }}>
                     Pain Point
                   </p>
-                  <p className="text-sm leading-relaxed text-gray-600">{lead.pain_point}</p>
+                  <p className="text-sm leading-relaxed" style={{ color: "#71717a" }}>{lead.pain_point}</p>
                 </div>
               )}
               {lead.intent_signal && (
-                <div className="rounded-lg p-3.5 bg-amber-50 border border-amber-100">
-                  <p className="text-xs font-medium uppercase tracking-wider mb-1.5 text-amber-600">
+                <div className="rounded-lg p-3.5"
+                  style={{ background: "rgba(234,179,8,0.06)", border: "1px solid rgba(234,179,8,0.15)" }}>
+                  <p className="text-xs font-medium uppercase tracking-wider mb-1.5" style={{ color: "#ca8a04" }}>
                     ⚡ Intent-Signal
                   </p>
-                  <p className="text-sm leading-relaxed text-amber-800">{lead.intent_signal}</p>
+                  <p className="text-sm leading-relaxed" style={{ color: "#a16207" }}>{lead.intent_signal}</p>
                 </div>
               )}
             </div>
