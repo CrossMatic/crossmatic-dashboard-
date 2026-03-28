@@ -9,20 +9,16 @@ export default async function DashboardLayout({ children }: { children: React.Re
   if (!user) redirect("/login");
 
   const { data: profile } = await supabase
-    .from("profiles")
-    .select("agency_name")
-    .eq("id", user.id)
-    .single();
+    .from("profiles").select("agency_name").eq("id", user.id).single();
 
   return (
-    <div className="min-h-screen" style={{ background: "#0a0a0a" }}>
+    <div className="min-h-screen" style={{ background: "hsl(222, 50%, 7%)" }}>
       <Sidebar agencyName={profile?.agency_name ?? user.email ?? "Kunde"} />
 
-      {/* Mobile top bar */}
       <div className="md:hidden h-14 flex items-center px-5 sticky top-0 z-40 border-b"
-        style={{ background: "#111111", borderColor: "#2a2a2a" }}>
-        <span className="text-lg font-bold tracking-tight text-white">
-          Cross<span style={{ color: "hsl(210, 100%, 60%)" }}>Matic</span>
+        style={{ background: "hsl(222, 50%, 7%)", borderColor: "hsl(220, 30%, 20%)" }}>
+        <span className="text-lg font-bold tracking-tight" style={{ color: "hsl(210, 40%, 98%)" }}>
+          Cross<span style={{ color: "hsl(210, 100%, 65%)" }}>Matic</span>
         </span>
       </div>
 
