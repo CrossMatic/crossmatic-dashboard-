@@ -13,7 +13,7 @@ export default async function DashboardLayout({ children }: { children: React.Re
     .from("profiles").select("agency_name").eq("id", user.id).single();
 
   return (
-    <div className="min-h-screen" style={{ backgroundColor: "#0d1118" }}>
+    <div className="min-h-screen" style={{ backgroundColor: "hsl(222, 50%, 7%)" }}>
       <Sidebar agencyName={profile?.agency_name ?? user.email ?? "Kunde"} email={user.email ?? ""} />
 
       {/* Mobile top bar */}
