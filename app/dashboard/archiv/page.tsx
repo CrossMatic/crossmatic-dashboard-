@@ -18,8 +18,13 @@ export default async function ArchivPage() {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
 
-  const { data: leads } = await supabase
+  const { data: allLeads } = await supabase
     .from("leads").select("*").eq("client_id", user!.id).order("week_added", { ascending: false });
+
+  const latestWeek = allLeads?.[0]?.week_added ?? null;
+  const leads = latestWeek
+    ? (allLeads?.filter((l) => l.week_added !== latestWeek) ?? [])
+    : (allLeads ?? []);
 
   return (
     <div className="space-y-8">
