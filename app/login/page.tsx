@@ -1,19 +1,29 @@
 "use client";
 
-import { useState } from "react";
+import * as React from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
+
+interface ConfettiParticle {
+  id: number;
+  rotate: number;
+  color: string;
+}
+
+const colors = ["#facc15", "#22c55e", "#3b82f6", "#f472b6", "#f97316"];
 
 export default function LoginPage() {
   const router = useRouter();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
+  const [email, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
+  const [error, setError] = React.useState<string | null>(null);
+  const [loading, setLoading] = React.useState(false);
+  const [success, setSuccess] = React.useState(false);
+  const [particles, setParticles] = React.useState<ConfettiParticle[]>([]);
 
   async function handleLogin(e: React.FormEvent) {
     e.preventDefault();
@@ -29,82 +39,97 @@ export default function LoginPage() {
       return;
     }
 
-    router.push("/dashboard");
-    router.refresh();
+    // Confetti on success
+    const newParticles: ConfettiParticle[] = Array.from({ length: 30 }).map((_, i) => ({
+      id: Date.now() + i,
+      rotate: Math.random() * 360,
+      color: colors[Math.floor(Math.random() * colors.length)],
+    }));
+    setParticles(newParticles);
+    setSuccess(true);
+
+    setTimeout(() => setParticles([]), 1000);
+    setTimeout(() => {
+      router.push("/dashboard");
+      router.refresh();
+    }, 1200);
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 bg-white">
+    <div className="relative w-full min-h-screen flex items-center justify-center overflow-hidden bg-white">
 
+      {/* Confetti */}
+      <AnimatePresence>
+        {particles.map((p) => (
+          <motion.div
+            key={p.id}
+            className="absolute w-3 h-3 rounded-full"
+            style={{ backgroundColor: p.color }}
+            initial={{ x: 0, y: 0, scale: 1, opacity: 1, rotate: p.rotate }}
+            animate={{
+              x: (Math.random() - 0.5) * 150,
+              y: -Math.random() * 200,
+              scale: 0,
+              opacity: 0,
+              rotate: p.rotate + Math.random() * 360,
+            }}
+            transition={{ duration: 1, ease: "easeOut" }}
+          />
+        ))}
+      </AnimatePresence>
+
+      {/* Login Card */}
       <motion.div
-        initial={{ opacity: 0, y: 16 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4, ease: "easeOut" }}
-        className="w-full max-w-sm relative z-10"
+        initial={{ scale: 0.95, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        className="relative z-10 w-full max-w-md bg-white rounded-2xl shadow-2xl p-8 flex flex-col gap-6"
       >
-        {/* Card */}
-        <div
-          className="bg-white rounded-2xl p-8 border border-gray-100"
-          style={{ boxShadow: "0 8px 48px 0 rgba(0,0,0,0.13), 0 2px 8px 0 rgba(0,0,0,0.07)" }}
-        >
-          <h1 className="text-xl font-semibold text-gray-900 mb-1">
-            Willkommen zurück
-          </h1>
-          <p className="text-sm text-gray-500 mb-8">
-            Melden Sie sich an, um Ihre Leads zu sehen.
-          </p>
+        <h2 className="text-3xl font-bold text-center text-gray-900">
+          {success ? "Willkommen!" : "Willkommen zurück"}
+        </h2>
 
-          <form onSubmit={handleLogin} className="space-y-5">
-            <div className="space-y-1.5">
-              <Label htmlFor="email" className="text-gray-700">
-                E-Mail
-              </Label>
-              <Input
-                id="email"
-                type="email"
-                placeholder="ihre@email.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                className="bg-white border-gray-200 text-gray-900 placeholder:text-gray-400 focus-visible:border-blue-400 focus-visible:ring-blue-100"
-              />
-            </div>
+        <form onSubmit={handleLogin} className="flex flex-col gap-4 mt-2">
+          <div>
+            <Label htmlFor="email">E-Mail</Label>
+            <Input
+              id="email"
+              type="email"
+              placeholder="ihre@email.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              className="hover:scale-105 transition-transform duration-200"
+            />
+          </div>
 
-            <div className="space-y-1.5">
-              <Label htmlFor="password" className="text-gray-700">
-                Passwort
-              </Label>
-              <Input
-                id="password"
-                type="password"
-                placeholder="••••••••"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-                className="bg-white border-gray-200 text-gray-900 placeholder:text-gray-400 focus-visible:border-blue-400 focus-visible:ring-blue-100"
-              />
-            </div>
+          <div>
+            <Label htmlFor="password">Passwort</Label>
+            <Input
+              id="password"
+              type="password"
+              placeholder="••••••••"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              className="hover:scale-105 transition-transform duration-200"
+            />
+          </div>
 
-            {error && (
-              <p className="text-sm text-red-500">{error}</p>
-            )}
+          {error && (
+            <p className="text-sm text-red-500">{error}</p>
+          )}
 
-            <Button
-              type="submit"
-              disabled={loading}
-              size="lg"
-              className="w-full font-semibold mt-2"
-              style={{
-                background: "hsl(210, 100%, 55%)",
-                color: "#fff",
-              }}
-            >
-              {loading ? "Wird geladen..." : "Einloggen →"}
-            </Button>
-          </form>
-        </div>
+          <Button
+            type="submit"
+            disabled={loading || success}
+            size="lg"
+            className="w-full mt-4 hover:scale-110 transition-transform duration-200"
+          >
+            {success ? "Eingeloggt!" : loading ? "Wird geladen..." : "Einloggen →"}
+          </Button>
+        </form>
 
-        <p className="text-center text-xs mt-6 text-gray-400">
+        <p className="text-center text-sm text-gray-500 mt-2">
           Kein Account? Kontaktieren Sie uns.
         </p>
       </motion.div>
