@@ -37,7 +37,11 @@ export default async function DashboardPage() {
 
       {allUncontacted.length > 0 && (
         <div className="flex items-center gap-3 px-4 py-3 rounded-xl border text-sm"
-          style={{ background: "hsl(210, 100%, 65%, 0.07)", borderColor: "hsl(210, 100%, 65%, 0.2)", color: "hsl(210, 100%, 75%)" }}>
+          style={{
+            backgroundColor: "hsl(210, 100%, 65%, 0.07)",
+            borderColor: "hsl(210, 100%, 65%, 0.2)",
+            color: "hsl(210, 100%, 65%)",
+          }}>
           <Sparkles size={16} className="shrink-0" />
           <span>
             {allUncontacted.length === 1
@@ -50,12 +54,12 @@ export default async function DashboardPage() {
       {weeks.map((week, index) => (
         <section key={week}>
           <div className="flex items-center gap-3 mb-5">
-            <h2 className="text-base font-semibold" style={{ color: "hsl(215, 20%, 65%)" }}>
+            <h2 className="text-base font-semibold" style={{ color: "hsl(210, 40%, 98%)" }}>
               {week === "unbekannt" ? "Weitere Leads" : `Woche vom ${formatWeekLabel(week)}`}
             </h2>
             {index === 0 && (
               <span className="text-xs px-2.5 py-0.5 rounded-full font-medium"
-                style={{ background: "hsl(210, 100%, 65%, 0.12)", color: "hsl(210, 100%, 65%)" }}>
+                style={{ backgroundColor: "hsl(210, 100%, 65%, 0.12)", color: "hsl(210, 100%, 65%)" }}>
                 {grouped[week]!.length} neu
               </span>
             )}
@@ -70,9 +74,9 @@ export default async function DashboardPage() {
 
       {(!leads || leads.length === 0) && (
         <div className="rounded-2xl border p-16 text-center flex flex-col items-center gap-4"
-          style={{ borderColor: "hsl(220, 30%, 20%)", background: "hsl(222, 50%, 9%)" }}>
+          style={{ borderColor: "hsl(220, 30%, 20%)", backgroundColor: "hsl(222, 50%, 7%)" }}>
           <div className="w-16 h-16 rounded-2xl flex items-center justify-center text-2xl"
-            style={{ background: "hsl(210, 100%, 65%, 0.1)" }}>🎯</div>
+            style={{ backgroundColor: "hsl(210, 100%, 65%, 0.1)" }}>🎯</div>
           <div>
             <p className="text-base font-semibold mb-1" style={{ color: "hsl(210, 40%, 98%)" }}>
               Ihre ersten Leads sind unterwegs

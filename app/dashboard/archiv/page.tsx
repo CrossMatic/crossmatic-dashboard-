@@ -2,11 +2,12 @@ import { createClient } from "@/lib/supabase/server";
 import LeadStatusDropdown from "@/components/LeadStatusDropdown";
 import { ExternalLink } from "lucide-react";
 
-const TEXT = "hsl(210, 40%, 98%)";
-const TEXT_MUTED = "hsl(215, 20%, 65%)";
-const TEXT_DIM = "hsl(215, 20%, 45%)";
+const FG = "hsl(210, 40%, 98%)";
+const MUTED = "hsl(215, 20%, 65%)";
+const DIM = "hsl(215, 20%, 45%)";
 const BORDER = "hsl(220, 30%, 20%)";
-const CARD_BG = "hsl(222, 50%, 9%)";
+const CARD = "hsl(222, 50%, 7%)";
+const SECONDARY = "hsl(220, 30%, 14%)";
 const ACCENT = "hsl(210, 100%, 65%)";
 
 function formatDate(dateStr: string): string {
@@ -23,8 +24,8 @@ export default async function ArchivPage() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-2xl font-bold" style={{ color: TEXT }}>Archiv</h1>
-        <p className="mt-1.5 text-sm" style={{ color: TEXT_MUTED }}>
+        <h1 className="text-2xl font-bold" style={{ color: FG }}>Archiv</h1>
+        <p className="mt-1.5 text-sm" style={{ color: MUTED }}>
           Alle {leads?.length ?? 0} Leads auf einen Blick
         </p>
       </div>
@@ -32,29 +33,31 @@ export default async function ArchivPage() {
       {leads && leads.length > 0 ? (
         <div className="rounded-xl border overflow-hidden" style={{ borderColor: BORDER }}>
           <div className="grid grid-cols-[40px_1fr_140px_160px_130px_100px] gap-4 px-5 py-3 border-b text-xs font-medium uppercase tracking-wider"
-            style={{ background: "hsl(220, 30%, 14%)", borderColor: BORDER, color: TEXT_DIM }}>
+            style={{ backgroundColor: SECONDARY, borderColor: BORDER, color: DIM }}>
             <div /><div>Unternehmen</div><div>Branche</div><div>Kontakt</div><div>Status</div><div>Woche</div>
           </div>
 
           {leads.map((lead) => (
             <div key={lead.id}
-              className="grid grid-cols-[40px_1fr_140px_160px_130px_100px] gap-4 px-5 py-4 items-center border-b last:border-0 transition-colors hover:bg-white/[0.02]"
-              style={{ borderColor: "hsl(220, 30%, 16%)", background: CARD_BG }}>
+              className="grid grid-cols-[40px_1fr_140px_160px_130px_100px] gap-4 px-5 py-4 items-center border-b last:border-0 transition-colors"
+              style={{ borderColor: "hsl(220, 30%, 16%)", backgroundColor: CARD }}
+              onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = SECONDARY)}
+              onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = CARD)}>
 
               <div>
                 {lead.logo_url ? (
                   <img src={lead.logo_url} alt="" className="w-8 h-8 rounded-md object-contain"
-                    style={{ background: "hsl(220, 30%, 14%)" }} />
+                    style={{ backgroundColor: SECONDARY }} />
                 ) : (
                   <div className="w-8 h-8 rounded-md flex items-center justify-center text-xs font-bold"
-                    style={{ background: "hsl(210, 100%, 65%, 0.1)", color: ACCENT }}>
+                    style={{ backgroundColor: "hsl(210, 100%, 65%, 0.1)", color: ACCENT }}>
                     {lead.company_name.charAt(0).toUpperCase()}
                   </div>
                 )}
               </div>
 
               <div className="min-w-0">
-                <p className="text-sm font-medium truncate" style={{ color: TEXT }}>{lead.company_name}</p>
+                <p className="text-sm font-medium truncate" style={{ color: FG }}>{lead.company_name}</p>
                 {lead.website && (
                   <a href={lead.website.startsWith("http") ? lead.website : `https://${lead.website}`}
                     target="_blank" rel="noopener noreferrer"
@@ -65,22 +68,22 @@ export default async function ArchivPage() {
                 )}
               </div>
 
-              <div className="text-xs truncate" style={{ color: TEXT_MUTED }}>{lead.industry ?? "—"}</div>
+              <div className="text-xs truncate" style={{ color: MUTED }}>{lead.industry ?? "—"}</div>
 
               <div className="min-w-0">
                 {lead.contact_name ? (
                   <>
-                    <p className="text-sm truncate" style={{ color: TEXT_MUTED }}>{lead.contact_name}</p>
+                    <p className="text-sm truncate" style={{ color: FG }}>{lead.contact_name}</p>
                     {lead.contact_position && (
-                      <p className="text-xs truncate" style={{ color: TEXT_DIM }}>{lead.contact_position}</p>
+                      <p className="text-xs truncate" style={{ color: MUTED }}>{lead.contact_position}</p>
                     )}
                   </>
-                ) : <span style={{ color: TEXT_DIM }} className="text-xs">—</span>}
+                ) : <span className="text-xs" style={{ color: DIM }}>—</span>}
               </div>
 
               <div><LeadStatusDropdown leadId={lead.id} initialStatus={lead.status} /></div>
 
-              <div className="text-xs" style={{ color: TEXT_DIM }}>
+              <div className="text-xs" style={{ color: MUTED }}>
                 {lead.week_added ? formatDate(lead.week_added) : "—"}
               </div>
             </div>
@@ -88,12 +91,12 @@ export default async function ArchivPage() {
         </div>
       ) : (
         <div className="rounded-2xl border p-16 text-center flex flex-col items-center gap-4"
-          style={{ borderColor: BORDER, background: CARD_BG }}>
+          style={{ borderColor: BORDER, backgroundColor: CARD }}>
           <div className="w-16 h-16 rounded-2xl flex items-center justify-center text-2xl"
-            style={{ background: "hsl(210, 100%, 65%, 0.1)" }}>📁</div>
+            style={{ backgroundColor: "hsl(210, 100%, 65%, 0.1)" }}>📁</div>
           <div>
-            <p className="text-base font-semibold mb-1" style={{ color: TEXT }}>Noch keine Leads im Archiv</p>
-            <p className="text-sm" style={{ color: TEXT_MUTED }}>Alle gelieferten Leads erscheinen hier in der Übersicht.</p>
+            <p className="text-base font-semibold mb-1" style={{ color: FG }}>Noch keine Leads im Archiv</p>
+            <p className="text-sm" style={{ color: MUTED }}>Alle gelieferten Leads erscheinen hier in der Übersicht.</p>
           </div>
         </div>
       )}
