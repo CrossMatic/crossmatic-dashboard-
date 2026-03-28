@@ -1,5 +1,3 @@
-export const unstable_instant = { prefetch: "static" };
-
 import { Suspense } from "react";
 import { createClient } from "@/lib/supabase/server";
 import LeadCard from "@/components/LeadCard";
