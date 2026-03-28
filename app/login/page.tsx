@@ -89,8 +89,8 @@ export default function LoginPage() {
         </h2>
 
         <form onSubmit={handleLogin} className="flex flex-col gap-4 mt-2">
-          <div>
-            <Label htmlFor="email">E-Mail</Label>
+          <div className="flex flex-col gap-1.5">
+            <Label htmlFor="email" className="text-sm font-medium text-gray-700">E-Mail</Label>
             <Input
               id="email"
               type="email"
@@ -98,12 +98,12 @@ export default function LoginPage() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="hover:scale-105 transition-transform duration-200"
+              className="border-gray-200 hover:scale-105 transition-transform duration-200"
             />
           </div>
 
-          <div>
-            <Label htmlFor="password">Passwort</Label>
+          <div className="flex flex-col gap-1.5">
+            <Label htmlFor="password" className="text-sm font-medium text-gray-700">Passwort</Label>
             <Input
               id="password"
               type="password"
@@ -111,7 +111,7 @@ export default function LoginPage() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              className="hover:scale-105 transition-transform duration-200"
+              className="border-gray-200 hover:scale-105 transition-transform duration-200"
             />
           </div>
 
@@ -123,7 +123,7 @@ export default function LoginPage() {
             type="submit"
             disabled={loading || success}
             size="lg"
-            className="w-full mt-4 hover:scale-110 transition-transform duration-200"
+            className="w-full mt-4 text-white hover:scale-110 transition-transform duration-200"
           >
             {success ? "Eingeloggt!" : loading ? "Wird geladen..." : "Einloggen →"}
           </Button>
