@@ -1,5 +1,9 @@
 "use client";
 
+import { useState } from "react";
+import { ChevronDown, ChevronUp } from "lucide-react";
+import LeadStatusDropdown from "./LeadStatusDropdown";
+
 interface Lead {
   id: string;
   company_name: string;
@@ -17,27 +21,31 @@ interface Lead {
   fit_description: string | null;
   pain_point: string | null;
   intent_signal: string | null;
+  status: string | null;
   week_added: string | null;
 }
 
 export default function LeadCard({ lead }: { lead: Lead }) {
+  const [analyseOpen, setAnalyseOpen] = useState(false);
+  const hasAnalyse = lead.fit_description || lead.pain_point || lead.intent_signal;
+
   return (
     <div
       className="rounded-xl border flex flex-col overflow-hidden transition-all duration-200"
       style={{ background: "hsl(220, 30%, 11%)", borderColor: "hsl(220, 30%, 20%)" }}
       onMouseEnter={(e) => {
-        (e.currentTarget as HTMLDivElement).style.borderColor = "hsl(210, 100%, 65%, 0.4)";
-        (e.currentTarget as HTMLDivElement).style.boxShadow = "0 0 24px hsl(210, 100%, 65%, 0.07)";
+        (e.currentTarget as HTMLDivElement).style.borderColor = "hsl(210, 100%, 65%, 0.35)";
+        (e.currentTarget as HTMLDivElement).style.boxShadow = "0 0 24px hsl(210, 100%, 65%, 0.06)";
       }}
       onMouseLeave={(e) => {
         (e.currentTarget as HTMLDivElement).style.borderColor = "hsl(220, 30%, 20%)";
         (e.currentTarget as HTMLDivElement).style.boxShadow = "none";
       }}
     >
-      {/* Header: Firma */}
+      {/* Header */}
       <div className="p-6 pb-4">
         <div className="flex items-start justify-between gap-3">
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 min-w-0">
             {lead.logo_url ? (
               <img
                 src={lead.logo_url}
@@ -53,21 +61,21 @@ export default function LeadCard({ lead }: { lead: Lead }) {
                 {lead.company_name.charAt(0).toUpperCase()}
               </div>
             )}
-            <h2 className="text-lg font-semibold leading-tight" style={{ color: "hsl(210, 40%, 98%)" }}>
-              {lead.company_name}
-            </h2>
+            <div className="min-w-0">
+              <h2 className="text-base font-semibold leading-tight truncate" style={{ color: "hsl(210, 40%, 98%)" }}>
+                {lead.company_name}
+              </h2>
+              {lead.industry && (
+                <span className="text-xs" style={{ color: "hsl(215, 20%, 50%)" }}>
+                  {lead.industry}
+                </span>
+              )}
+            </div>
           </div>
-          {lead.industry && (
-            <span
-              className="text-xs px-2.5 py-1 rounded-full font-medium shrink-0"
-              style={{ background: "hsl(210, 100%, 65%, 0.12)", color: "hsl(210, 100%, 65%)" }}
-            >
-              {lead.industry}
-            </span>
-          )}
+          <LeadStatusDropdown leadId={lead.id} initialStatus={lead.status} />
         </div>
 
-        <div className="flex items-center gap-3 mt-1.5 flex-wrap">
+        <div className="flex items-center gap-4 mt-3 flex-wrap">
           {lead.website && (
             <a
               href={lead.website.startsWith("http") ? lead.website : `https://${lead.website}`}
@@ -80,36 +88,36 @@ export default function LeadCard({ lead }: { lead: Lead }) {
             </a>
           )}
           {lead.location && (
-            <span className="text-xs" style={{ color: "hsl(215, 20%, 55%)" }}>
+            <span className="text-xs" style={{ color: "hsl(215, 20%, 50%)" }}>
               📍 {lead.location}
             </span>
           )}
         </div>
 
         {lead.description && (
-          <p className="text-sm leading-relaxed mt-3" style={{ color: "hsl(215, 20%, 65%)" }}>
+          <p className="text-sm leading-relaxed mt-3" style={{ color: "hsl(215, 20%, 62%)" }}>
             {lead.description}
           </p>
         )}
       </div>
 
-      {/* Trennlinie */}
-      <div className="h-px mx-6" style={{ background: "hsl(220, 30%, 20%)" }} />
+      {/* Divider */}
+      <div className="h-px mx-6" style={{ background: "hsl(220, 30%, 18%)" }} />
 
       {/* Kontaktperson */}
       <div className="p-6 py-4 space-y-2">
-        <p className="text-xs font-medium uppercase tracking-wider mb-3" style={{ color: "hsl(215, 20%, 45%)" }}>
+        <p className="text-xs font-medium uppercase tracking-wider mb-3" style={{ color: "hsl(215, 20%, 40%)" }}>
           Entscheiderperson
         </p>
 
         {lead.contact_name && (
           <div className="flex items-center gap-2.5">
             <span className="text-sm">👤</span>
-            <span className="text-sm font-medium" style={{ color: "hsl(210, 40%, 98%)" }}>
+            <span className="text-sm font-medium" style={{ color: "hsl(210, 40%, 95%)" }}>
               {lead.contact_name}
             </span>
             {lead.contact_position && (
-              <span className="text-xs" style={{ color: "hsl(215, 20%, 55%)" }}>
+              <span className="text-xs" style={{ color: "hsl(215, 20%, 50%)" }}>
                 · {lead.contact_position}
               </span>
             )}
@@ -118,7 +126,7 @@ export default function LeadCard({ lead }: { lead: Lead }) {
         {lead.contact_email && (
           <div className="flex items-center gap-2.5">
             <span className="text-sm">✉️</span>
-            <a href={`mailto:${lead.contact_email}`} className="text-sm hover:underline" style={{ color: "hsl(210, 40%, 88%)" }}>
+            <a href={`mailto:${lead.contact_email}`} className="text-sm hover:underline" style={{ color: "hsl(210, 40%, 85%)" }}>
               {lead.contact_email}
             </a>
           </div>
@@ -126,7 +134,7 @@ export default function LeadCard({ lead }: { lead: Lead }) {
         {lead.phone && (
           <div className="flex items-center gap-2.5">
             <span className="text-sm">📞</span>
-            <a href={`tel:${lead.phone}`} className="text-sm hover:underline" style={{ color: "hsl(210, 40%, 88%)" }}>
+            <a href={`tel:${lead.phone}`} className="text-sm hover:underline" style={{ color: "hsl(210, 40%, 85%)" }}>
               {lead.phone}
             </a>
           </div>
@@ -134,7 +142,7 @@ export default function LeadCard({ lead }: { lead: Lead }) {
         {lead.linkedin_url && (
           <div className="flex items-center gap-2.5">
             <span className="text-sm">🔗</span>
-            <a href={lead.linkedin_url} target="_blank" rel="noopener noreferrer" className="text-sm hover:underline truncate" style={{ color: "hsl(210, 100%, 65%)" }}>
+            <a href={lead.linkedin_url} target="_blank" rel="noopener noreferrer" className="text-sm hover:underline" style={{ color: "hsl(210, 100%, 65%)" }}>
               LinkedIn-Profil
             </a>
           </div>
@@ -149,49 +157,56 @@ export default function LeadCard({ lead }: { lead: Lead }) {
         )}
       </div>
 
-      {/* Analyse-Sektionen */}
-      {(lead.fit_description || lead.pain_point || lead.intent_signal) && (
+      {/* Analyse Accordion */}
+      {hasAnalyse && (
         <>
-          <div className="h-px mx-6" style={{ background: "hsl(220, 30%, 20%)" }} />
-          <div className="p-6 pt-4 space-y-4">
+          <div className="h-px mx-6" style={{ background: "hsl(220, 30%, 18%)" }} />
+          <button
+            onClick={() => setAnalyseOpen((v) => !v)}
+            className="flex items-center justify-between px-6 py-3.5 text-sm font-medium transition-opacity hover:opacity-70 cursor-pointer w-full text-left"
+            style={{ color: "hsl(215, 20%, 55%)" }}
+          >
+            <span>Analyse anzeigen</span>
+            {analyseOpen ? <ChevronUp size={15} /> : <ChevronDown size={15} />}
+          </button>
 
-            {lead.fit_description && (
-              <div>
-                <p className="text-xs font-medium uppercase tracking-wider mb-1.5" style={{ color: "hsl(210, 100%, 65%)" }}>
-                  Agentur-Fit
-                </p>
-                <p className="text-sm leading-relaxed" style={{ color: "hsl(215, 20%, 65%)" }}>
-                  {lead.fit_description}
-                </p>
-              </div>
-            )}
-
-            {lead.pain_point && (
-              <div>
-                <p className="text-xs font-medium uppercase tracking-wider mb-1.5" style={{ color: "hsl(210, 100%, 65%)" }}>
-                  Pain Point
-                </p>
-                <p className="text-sm leading-relaxed" style={{ color: "hsl(215, 20%, 65%)" }}>
-                  {lead.pain_point}
-                </p>
-              </div>
-            )}
-
-            {lead.intent_signal && (
-              <div
-                className="rounded-lg p-3.5"
-                style={{ background: "hsl(45, 100%, 60%, 0.07)", border: "1px solid hsl(45, 100%, 60%, 0.2)" }}
-              >
-                <p className="text-xs font-medium uppercase tracking-wider mb-1.5" style={{ color: "hsl(45, 100%, 65%)" }}>
-                  ⚡ Intent-Signal
-                </p>
-                <p className="text-sm leading-relaxed" style={{ color: "hsl(215, 20%, 72%)" }}>
-                  {lead.intent_signal}
-                </p>
-              </div>
-            )}
-
-          </div>
+          {analyseOpen && (
+            <div className="px-6 pb-6 space-y-4">
+              {lead.fit_description && (
+                <div>
+                  <p className="text-xs font-medium uppercase tracking-wider mb-1.5" style={{ color: "hsl(210, 100%, 65%)" }}>
+                    Agentur-Fit
+                  </p>
+                  <p className="text-sm leading-relaxed" style={{ color: "hsl(215, 20%, 62%)" }}>
+                    {lead.fit_description}
+                  </p>
+                </div>
+              )}
+              {lead.pain_point && (
+                <div>
+                  <p className="text-xs font-medium uppercase tracking-wider mb-1.5" style={{ color: "hsl(210, 100%, 65%)" }}>
+                    Pain Point
+                  </p>
+                  <p className="text-sm leading-relaxed" style={{ color: "hsl(215, 20%, 62%)" }}>
+                    {lead.pain_point}
+                  </p>
+                </div>
+              )}
+              {lead.intent_signal && (
+                <div
+                  className="rounded-lg p-3.5"
+                  style={{ background: "hsl(45, 100%, 60%, 0.07)", border: "1px solid hsl(45, 100%, 60%, 0.2)" }}
+                >
+                  <p className="text-xs font-medium uppercase tracking-wider mb-1.5" style={{ color: "hsl(45, 100%, 65%)" }}>
+                    ⚡ Intent-Signal
+                  </p>
+                  <p className="text-sm leading-relaxed" style={{ color: "hsl(215, 20%, 70%)" }}>
+                    {lead.intent_signal}
+                  </p>
+                </div>
+              )}
+            </div>
+          )}
         </>
       )}
     </div>
