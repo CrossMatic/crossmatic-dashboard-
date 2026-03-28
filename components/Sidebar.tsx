@@ -35,7 +35,7 @@ export default function Sidebar() {
     <>
       {/* Desktop Sidebar */}
       <aside className="hidden md:flex flex-col fixed left-0 top-0 h-full w-56 border-r z-40"
-        style={{ backgroundColor: "hsl(222, 50%, 7%)", borderColor: "hsl(220, 30%, 20%)" }}>
+        style={{ backgroundColor: "#02040a", borderColor: "hsl(220, 30%, 20%)" }}>
 
         <div className="h-16 flex items-center px-6 border-b shrink-0"
           style={{ borderColor: "hsl(220, 30%, 20%)" }}>
@@ -75,7 +75,7 @@ export default function Sidebar() {
 
       {/* Mobile Bottom Nav */}
       <nav className="md:hidden fixed bottom-0 left-0 right-0 z-50 border-t flex"
-        style={{ backgroundColor: "hsl(222, 50%, 7%)", borderColor: "hsl(220, 30%, 20%)" }}>
+        style={{ backgroundColor: "#02040a", borderColor: "hsl(220, 30%, 20%)" }}>
         {navItems.map(({ href, label, icon: Icon }) => {
           const isActive = pathname === href;
           return (

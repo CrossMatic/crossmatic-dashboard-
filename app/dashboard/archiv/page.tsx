@@ -46,7 +46,7 @@ async function ArchivContent() {
       {leads.length > 0 ? (
         <div className="rounded-xl border overflow-hidden" style={{ borderColor: "hsl(220, 30%, 20%)" }}>
           <div className="grid grid-cols-[40px_1fr_140px_160px_130px_100px] gap-4 px-5 py-3 border-b text-xs font-medium uppercase tracking-wider"
-            style={{ backgroundColor: "hsl(222, 50%, 7%)", borderColor: "hsl(220, 30%, 20%)", color: DIM }}>
+            style={{ backgroundColor: "#02040a", borderColor: "hsl(220, 30%, 20%)", color: DIM }}>
             <div /><div>Unternehmen</div><div>Branche</div><div>Kontakt</div><div>Status</div><div>Woche</div>
           </div>
 
@@ -58,7 +58,7 @@ async function ArchivContent() {
               <div>
                 {lead.logo_url ? (
                   <img src={lead.logo_url} alt="" className="w-8 h-8 rounded-md object-contain"
-                    style={{ backgroundColor: "hsl(222, 50%, 7%)" }} />
+                    style={{ backgroundColor: "#02040a" }} />
                 ) : (
                   <div className="w-8 h-8 rounded-md flex items-center justify-center text-xs font-bold"
                     style={{ backgroundColor: "hsl(210, 100%, 65%, 0.1)", color: ACCENT }}>

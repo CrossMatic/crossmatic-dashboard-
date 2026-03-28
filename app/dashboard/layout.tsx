@@ -17,7 +17,7 @@ export default async function DashboardLayout({ children }: { children: React.Re
 
       {/* Mobile top bar */}
       <div className="md:hidden h-14 flex items-center px-5 sticky top-0 z-40 border-b"
-        style={{ backgroundColor: "hsl(222, 50%, 7%)", borderColor: "hsl(220, 30%, 20%)" }}>
+        style={{ backgroundColor: "#02040a", borderColor: "hsl(220, 30%, 20%)" }}>
         <Image src="/crossmatic-logo.png" alt="CrossMatic" width={120} height={30} className="object-contain" priority />
       </div>
 

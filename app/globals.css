@@ -42,7 +42,7 @@
 
 /* CrossMatic Design System — exakt aus nebula-flow */
 :root {
-  --background:           hsl(222, 50%, 7%);
+  --background:           #02040a;
   --foreground:           hsl(210, 40%, 98%);
   --card:                 hsl(220, 30%, 14%);
   --card-foreground:      hsl(210, 40%, 98%);
@@ -61,7 +61,7 @@
   --input:                hsl(220, 30%, 20%);
   --ring:                 hsl(210, 100%, 65%);
   --radius:               0.5rem;
-  --sidebar:              hsl(222, 50%, 7%);
+  --sidebar:              #02040a;
   --sidebar-foreground:   hsl(210, 40%, 98%);
   --sidebar-primary:      hsl(210, 100%, 65%);
   --sidebar-primary-foreground: hsl(222, 50%, 7%);
