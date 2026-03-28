@@ -6,6 +6,7 @@ import { createClient } from "@/lib/supabase/client";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
+import { motion } from "framer-motion";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -33,44 +34,41 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4"
-      style={{ background: "hsl(222, 50%, 7%)" }}>
+    <div className="min-h-screen flex items-center justify-center px-4 bg-gray-50">
 
-      {/* Blauer Glow-Effekt im Hintergrund */}
+      {/* Subtiler blauer Glow oben */}
       <div
-        className="fixed top-0 right-0 w-[600px] h-[600px] rounded-full opacity-20 pointer-events-none"
+        className="fixed top-0 left-1/2 -translate-x-1/2 w-[800px] h-[300px] pointer-events-none"
         style={{
-          background: "radial-gradient(circle, hsl(210, 100%, 65%) 0%, transparent 70%)",
-          transform: "translate(30%, -30%)",
+          background: "radial-gradient(ellipse, hsl(210, 100%, 65%, 0.12) 0%, transparent 70%)",
         }}
       />
 
-      <div className="w-full max-w-sm relative z-10">
+      <motion.div
+        initial={{ opacity: 0, y: 16 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, ease: "easeOut" }}
+        className="w-full max-w-sm relative z-10"
+      >
         {/* Logo */}
-        <div className="flex justify-center mb-10">
-          <span className="text-2xl font-bold tracking-tight" style={{ color: "hsl(210, 40%, 98%)" }}>
-            Cross<span style={{ color: "hsl(210, 100%, 65%)" }}>Matic</span>
+        <div className="flex justify-center mb-8">
+          <span className="text-2xl font-bold tracking-tight text-gray-900">
+            Cross<span style={{ color: "hsl(210, 100%, 55%)" }}>Matic</span>
           </span>
         </div>
 
         {/* Card */}
-        <div
-          className="rounded-xl p-8 border"
-          style={{
-            background: "hsl(220, 30%, 11%)",
-            borderColor: "hsl(220, 30%, 20%)",
-          }}
-        >
-          <h1 className="text-xl font-semibold mb-1" style={{ color: "hsl(210, 40%, 98%)" }}>
+        <div className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
+          <h1 className="text-xl font-semibold text-gray-900 mb-1">
             Willkommen zurück
           </h1>
-          <p className="text-sm mb-8" style={{ color: "hsl(215, 20%, 65%)" }}>
+          <p className="text-sm text-gray-500 mb-8">
             Melden Sie sich an, um Ihre Leads zu sehen.
           </p>
 
           <form onSubmit={handleLogin} className="space-y-5">
-            <div className="space-y-2">
-              <Label htmlFor="email" style={{ color: "hsl(215, 20%, 65%)" }}>
+            <div className="space-y-1.5">
+              <Label htmlFor="email" className="text-gray-700">
                 E-Mail
               </Label>
               <Input
@@ -80,17 +78,12 @@ export default function LoginPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="border text-sm"
-                style={{
-                  background: "hsl(220, 30%, 14%)",
-                  borderColor: "hsl(220, 30%, 25%)",
-                  color: "hsl(210, 40%, 98%)",
-                }}
+                className="bg-white border-gray-200 text-gray-900 placeholder:text-gray-400 focus-visible:border-blue-400 focus-visible:ring-blue-100"
               />
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="password" style={{ color: "hsl(215, 20%, 65%)" }}>
+            <div className="space-y-1.5">
+              <Label htmlFor="password" className="text-gray-700">
                 Passwort
               </Label>
               <Input
@@ -100,28 +93,22 @@ export default function LoginPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                className="border text-sm"
-                style={{
-                  background: "hsl(220, 30%, 14%)",
-                  borderColor: "hsl(220, 30%, 25%)",
-                  color: "hsl(210, 40%, 98%)",
-                }}
+                className="bg-white border-gray-200 text-gray-900 placeholder:text-gray-400 focus-visible:border-blue-400 focus-visible:ring-blue-100"
               />
             </div>
 
             {error && (
-              <p className="text-sm" style={{ color: "hsl(0, 84.2%, 60.2%)" }}>
-                {error}
-              </p>
+              <p className="text-sm text-red-500">{error}</p>
             )}
 
             <Button
               type="submit"
               disabled={loading}
-              className="w-full font-semibold transition-opacity"
+              size="lg"
+              className="w-full font-semibold mt-2"
               style={{
-                background: "hsl(210, 100%, 65%)",
-                color: "hsl(222, 50%, 7%)",
+                background: "hsl(210, 100%, 55%)",
+                color: "#fff",
               }}
             >
               {loading ? "Wird geladen..." : "Einloggen →"}
@@ -129,10 +116,10 @@ export default function LoginPage() {
           </form>
         </div>
 
-        <p className="text-center text-xs mt-6" style={{ color: "hsl(215, 20%, 45%)" }}>
+        <p className="text-center text-xs mt-6 text-gray-400">
           Kein Account? Kontaktieren Sie CrossMatic.
         </p>
-      </div>
+      </motion.div>
     </div>
   );
 }
