@@ -12,7 +12,7 @@ export default async function DashboardLayout({ children }: { children: React.Re
   if (!user) redirect("/login");
 
   return (
-    <div className="min-h-screen" style={{ backgroundColor: "#02040a" }}>
+    <div className="min-h-dvh bg-background">
       <Sidebar />
 
       {/* Mobile top bar */}
