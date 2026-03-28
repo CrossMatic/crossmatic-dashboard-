@@ -28,7 +28,7 @@ interface Lead {
 const FG     = "hsl(210, 40%, 98%)";   // near-white — all main text
 const MUTED  = "hsl(215, 20%, 65%)";   // supporting text
 const DIM    = "hsl(215, 20%, 45%)";   // labels / de-emphasized
-const BORDER = "hsl(220, 30%, 20%)";
+const BORDER = "hsl(220, 10%, 22%)";
 const ACCENT = "hsl(210, 100%, 65%)";
 
 export default function LeadCard({ lead }: { lead: Lead }) {
@@ -38,7 +38,7 @@ export default function LeadCard({ lead }: { lead: Lead }) {
   return (
     <div
       className="surface-glow-hover rounded-xl border flex flex-col overflow-hidden"
-      style={{ backgroundColor: "hsl(220, 30%, 14%)", borderColor: BORDER }}
+      style={{ backgroundColor: "hsl(220, 8%, 15%)", borderColor: BORDER }}
     >
       {/* Header */}
       <div className="p-6 pb-4">

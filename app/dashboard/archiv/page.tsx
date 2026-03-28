@@ -5,9 +5,9 @@ import { ExternalLink } from "lucide-react";
 const FG = "hsl(210, 40%, 98%)";
 const MUTED = "hsl(215, 20%, 65%)";
 const DIM = "hsl(215, 20%, 45%)";
-const BORDER = "hsl(220, 30%, 20%)";
-const CARD = "hsl(222, 50%, 7%)";
-const SECONDARY = "hsl(220, 30%, 14%)";
+const BORDER = "hsl(220, 10%, 22%)";
+const CARD = "hsl(220, 8%, 15%)";
+const SECONDARY = "hsl(220, 8%, 18%)";
 const ACCENT = "hsl(210, 100%, 65%)";
 
 function formatDate(dateStr: string): string {
@@ -40,7 +40,7 @@ export default async function ArchivPage() {
           {leads.map((lead) => (
             <div key={lead.id}
               className="grid grid-cols-[40px_1fr_140px_160px_130px_100px] gap-4 px-5 py-4 items-center border-b last:border-0 transition-colors"
-              style={{ borderColor: "hsl(220, 30%, 16%)", backgroundColor: CARD }}
+              style={{ borderColor: "hsl(220, 10%, 20%)", backgroundColor: CARD }}
               onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = SECONDARY)}
               onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = CARD)}>
 
