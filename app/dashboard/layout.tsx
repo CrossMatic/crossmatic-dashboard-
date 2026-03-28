@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import Sidebar from "@/components/Sidebar";
@@ -12,15 +13,13 @@ export default async function DashboardLayout({ children }: { children: React.Re
     .from("profiles").select("agency_name").eq("id", user.id).single();
 
   return (
-    <div className="min-h-screen" style={{ backgroundColor: "#02040a" }}>
-      <Sidebar agencyName={profile?.agency_name ?? user.email ?? "Kunde"} />
+    <div className="min-h-screen" style={{ backgroundColor: "#0d1118" }}>
+      <Sidebar agencyName={profile?.agency_name ?? user.email ?? "Kunde"} email={user.email ?? ""} />
 
       {/* Mobile top bar */}
       <div className="md:hidden h-14 flex items-center px-5 sticky top-0 z-40 border-b"
         style={{ backgroundColor: "hsl(222, 50%, 7%)", borderColor: "hsl(220, 30%, 20%)" }}>
-        <span className="text-lg font-bold tracking-tight" style={{ color: "hsl(210, 40%, 98%)" }}>
-          Cross<span style={{ color: "hsl(210, 100%, 65%)" }}>Matic</span>
-        </span>
+        <Image src="/crossmatic-logo.png" alt="CrossMatic" width={120} height={30} className="object-contain" priority />
       </div>
 
       <main className="md:ml-56 px-5 sm:px-8 py-10 pb-28 md:pb-12 max-w-5xl">
