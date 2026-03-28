@@ -93,8 +93,8 @@ export default async function ArchivPage() {
           ))}
         </div>
       ) : (
-        <div className="rounded-2xl border p-16 text-center flex flex-col items-center gap-4"
-          style={{ borderColor: BORDER, backgroundColor: CARD }}>
+        <div className="rounded-2xl border border-white/10 p-16 text-center flex flex-col items-center gap-4"
+          style={{ backgroundColor: "#0d1118" }}>
           <div className="w-16 h-16 rounded-2xl flex items-center justify-center text-2xl"
             style={{ backgroundColor: "hsl(210, 100%, 65%, 0.1)" }}>📁</div>
           <div>
