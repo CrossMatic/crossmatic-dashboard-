@@ -39,10 +39,8 @@ export default async function ArchivPage() {
 
           {leads.map((lead) => (
             <div key={lead.id}
-              className="grid grid-cols-[40px_1fr_140px_160px_130px_100px] gap-4 px-5 py-4 items-center border-b last:border-0 transition-colors"
-              style={{ borderColor: "hsl(220, 30%, 18%)", backgroundColor: CARD }}
-              onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = SECONDARY)}
-              onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = CARD)}>
+              className="grid grid-cols-[40px_1fr_140px_160px_130px_100px] gap-4 px-5 py-4 items-center border-b last:border-0 transition-colors hover:bg-white/5"
+              style={{ borderColor: "hsl(220, 30%, 18%)", backgroundColor: CARD }}>
 
               <div>
                 {lead.logo_url ? (

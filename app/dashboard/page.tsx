@@ -1,6 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
 import LeadCard from "@/components/LeadCard";
-import { Sparkles } from "lucide-react";
 
 function formatWeekLabel(dateStr: string): string {
   return new Date(dateStr).toLocaleDateString("de-CH", { day: "2-digit", month: "long", year: "numeric" });
@@ -22,8 +21,6 @@ export default async function DashboardPage() {
 
   const weeks = Object.keys(grouped).sort((a, b) => b.localeCompare(a));
   const newLeadsCount = weeks[0] ? grouped[weeks[0]]!.length : 0;
-  const allUncontacted = leads?.filter((l) => !l.status || l.status === "neu") ?? [];
-
   return (
     <div className="space-y-10">
       <div>
@@ -35,21 +32,6 @@ export default async function DashboardPage() {
         </p>
       </div>
 
-      {allUncontacted.length > 0 && (
-        <div className="flex items-center gap-3 px-4 py-3 rounded-xl border text-sm"
-          style={{
-            backgroundColor: "hsl(210, 100%, 65%, 0.07)",
-            borderColor: "hsl(210, 100%, 65%, 0.2)",
-            color: "hsl(210, 100%, 65%)",
-          }}>
-          <Sparkles size={16} className="shrink-0" />
-          <span>
-            {allUncontacted.length === 1
-              ? "1 Lead wartet auf Ihre Kontaktaufnahme."
-              : `${allUncontacted.length} Leads warten auf Ihre Kontaktaufnahme.`}
-          </span>
-        </div>
-      )}
 
       {weeks.map((week, index) => (
         <section key={week}>
