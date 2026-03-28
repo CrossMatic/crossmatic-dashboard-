@@ -3,6 +3,7 @@
 interface Lead {
   id: string;
   company_name: string;
+  logo_url: string | null;
   website: string | null;
   industry: string | null;
   location: string | null;
@@ -36,9 +37,26 @@ export default function LeadCard({ lead }: { lead: Lead }) {
       {/* Header: Firma */}
       <div className="p-6 pb-4">
         <div className="flex items-start justify-between gap-3">
-          <h2 className="text-lg font-semibold leading-tight" style={{ color: "hsl(210, 40%, 98%)" }}>
-            {lead.company_name}
-          </h2>
+          <div className="flex items-center gap-3">
+            {lead.logo_url ? (
+              <img
+                src={lead.logo_url}
+                alt={`${lead.company_name} Logo`}
+                className="w-10 h-10 rounded-lg object-contain shrink-0"
+                style={{ background: "hsl(220, 30%, 16%)" }}
+              />
+            ) : (
+              <div
+                className="w-10 h-10 rounded-lg flex items-center justify-center shrink-0 text-sm font-bold"
+                style={{ background: "hsl(210, 100%, 65%, 0.15)", color: "hsl(210, 100%, 65%)" }}
+              >
+                {lead.company_name.charAt(0).toUpperCase()}
+              </div>
+            )}
+            <h2 className="text-lg font-semibold leading-tight" style={{ color: "hsl(210, 40%, 98%)" }}>
+              {lead.company_name}
+            </h2>
+          </div>
           {lead.industry && (
             <span
               className="text-xs px-2.5 py-1 rounded-full font-medium shrink-0"
