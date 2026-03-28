@@ -44,7 +44,7 @@
 :root {
   --background:           hsl(222, 50%, 7%);
   --foreground:           hsl(210, 40%, 98%);
-  --card:                 hsl(220, 30%, 11%);
+  --card:                 hsl(220, 30%, 14%);
   --card-foreground:      hsl(210, 40%, 98%);
   --popover:              hsl(222, 50%, 7%);
   --popover-foreground:   hsl(210, 40%, 98%);
@@ -75,10 +75,22 @@
   * {
     @apply border-border outline-ring/50;
   }
+  html, body {
+    background-color: #02040a;
+  }
   body {
-    @apply bg-background text-foreground;
+    @apply text-foreground;
   }
   html {
     @apply font-sans;
   }
+}
+
+/* Hover-Effekt exakt aus nebula-flow */
+.surface-glow-hover {
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+.surface-glow-hover:hover {
+  border-color: rgba(148, 163, 184, 0.4) !important;
+  box-shadow: 0 0 24px rgba(59, 130, 246, 0.2);
 }

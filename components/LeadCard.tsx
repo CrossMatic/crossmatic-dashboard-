@@ -25,13 +25,10 @@ interface Lead {
   week_added: string | null;
 }
 
-// Exact nebula-flow palette
-const FG = "hsl(210, 40%, 98%)";       // foreground — near white
-const MUTED = "hsl(215, 20%, 65%)";    // muted-foreground — readable gray
-const DIM = "hsl(215, 20%, 45%)";      // de-emphasized labels
+const FG     = "hsl(210, 40%, 98%)";   // near-white — all main text
+const MUTED  = "hsl(215, 20%, 65%)";   // supporting text
+const DIM    = "hsl(215, 20%, 45%)";   // labels / de-emphasized
 const BORDER = "hsl(220, 30%, 20%)";
-const CARD = "hsl(222, 50%, 7%)";
-const SECONDARY = "hsl(220, 30%, 14%)";
 const ACCENT = "hsl(210, 100%, 65%)";
 
 export default function LeadCard({ lead }: { lead: Lead }) {
@@ -39,20 +36,26 @@ export default function LeadCard({ lead }: { lead: Lead }) {
   const hasAnalyse = lead.fit_description || lead.pain_point || lead.intent_signal;
 
   return (
-    <div className="rounded-xl border flex flex-col overflow-hidden transition-all duration-300 surface-glow-hover"
-      style={{ backgroundColor: CARD, borderColor: BORDER }}>
-
+    <div
+      className="surface-glow-hover rounded-xl border flex flex-col overflow-hidden"
+      style={{ backgroundColor: "hsl(220, 30%, 14%)", borderColor: BORDER }}
+    >
       {/* Header */}
       <div className="p-6 pb-4">
         <div className="flex items-start justify-between gap-3">
           <div className="flex items-center gap-3 min-w-0">
             {lead.logo_url ? (
-              <img src={lead.logo_url} alt={`${lead.company_name} Logo`}
+              <img
+                src={lead.logo_url}
+                alt={`${lead.company_name} Logo`}
                 className="w-10 h-10 rounded-lg object-contain shrink-0"
-                style={{ backgroundColor: SECONDARY }} />
+                style={{ backgroundColor: "hsl(220, 30%, 20%)" }}
+              />
             ) : (
-              <div className="w-10 h-10 rounded-lg flex items-center justify-center shrink-0 text-sm font-bold"
-                style={{ backgroundColor: "hsl(210, 100%, 65%, 0.1)", color: ACCENT }}>
+              <div
+                className="w-10 h-10 rounded-lg flex items-center justify-center shrink-0 text-sm font-bold"
+                style={{ backgroundColor: "hsl(210, 100%, 65%, 0.12)", color: ACCENT }}
+              >
                 {lead.company_name.charAt(0).toUpperCase()}
               </div>
             )}
@@ -70,9 +73,11 @@ export default function LeadCard({ lead }: { lead: Lead }) {
 
         <div className="flex items-center gap-4 mt-3 flex-wrap">
           {lead.website && (
-            <a href={lead.website.startsWith("http") ? lead.website : `https://${lead.website}`}
+            <a
+              href={lead.website.startsWith("http") ? lead.website : `https://${lead.website}`}
               target="_blank" rel="noopener noreferrer"
-              className="text-xs hover:underline" style={{ color: ACCENT }}>
+              className="text-xs hover:underline" style={{ color: ACCENT }}
+            >
               🌐 {lead.website.replace(/^https?:\/\//, "")}
             </a>
           )}
@@ -82,7 +87,7 @@ export default function LeadCard({ lead }: { lead: Lead }) {
         </div>
 
         {lead.description && (
-          <p className="text-sm leading-relaxed mt-3" style={{ color: MUTED }}>
+          <p className="text-sm leading-relaxed mt-3" style={{ color: FG }}>
             {lead.description}
           </p>
         )}
@@ -107,7 +112,7 @@ export default function LeadCard({ lead }: { lead: Lead }) {
         {lead.contact_email && (
           <div className="flex items-center gap-2.5">
             <span className="text-sm">✉️</span>
-            <a href={`mailto:${lead.contact_email}`} className="text-sm hover:underline" style={{ color: MUTED }}>
+            <a href={`mailto:${lead.contact_email}`} className="text-sm hover:underline" style={{ color: FG }}>
               {lead.contact_email}
             </a>
           </div>
@@ -115,7 +120,7 @@ export default function LeadCard({ lead }: { lead: Lead }) {
         {lead.phone && (
           <div className="flex items-center gap-2.5">
             <span className="text-sm">📞</span>
-            <a href={`tel:${lead.phone}`} className="text-sm hover:underline" style={{ color: MUTED }}>
+            <a href={`tel:${lead.phone}`} className="text-sm hover:underline" style={{ color: FG }}>
               {lead.phone}
             </a>
           </div>
@@ -144,11 +149,11 @@ export default function LeadCard({ lead }: { lead: Lead }) {
       {hasAnalyse && (
         <>
           <div className="h-px mx-6" style={{ backgroundColor: BORDER }} />
-          <button onClick={() => setAnalyseOpen((v) => !v)}
-            className="flex items-center justify-between px-6 py-3.5 text-sm font-medium w-full text-left cursor-pointer transition-colors"
+          <button
+            onClick={() => setAnalyseOpen((v) => !v)}
+            className="flex items-center justify-between px-6 py-3.5 text-sm font-medium w-full text-left cursor-pointer transition-colors hover:bg-white/5"
             style={{ color: MUTED }}
-            onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "rgba(255,255,255,0.02)")}
-            onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "transparent")}>
+          >
             <span>Analyse anzeigen</span>
             {analyseOpen ? <ChevronUp size={15} /> : <ChevronDown size={15} />}
           </button>
@@ -160,7 +165,7 @@ export default function LeadCard({ lead }: { lead: Lead }) {
                   <p className="text-xs font-medium uppercase tracking-wider mb-1.5" style={{ color: ACCENT }}>
                     Agentur-Fit
                   </p>
-                  <p className="text-sm leading-relaxed" style={{ color: MUTED }}>{lead.fit_description}</p>
+                  <p className="text-sm leading-relaxed" style={{ color: FG }}>{lead.fit_description}</p>
                 </div>
               )}
               {lead.pain_point && (
@@ -168,7 +173,7 @@ export default function LeadCard({ lead }: { lead: Lead }) {
                   <p className="text-xs font-medium uppercase tracking-wider mb-1.5" style={{ color: ACCENT }}>
                     Pain Point
                   </p>
-                  <p className="text-sm leading-relaxed" style={{ color: MUTED }}>{lead.pain_point}</p>
+                  <p className="text-sm leading-relaxed" style={{ color: FG }}>{lead.pain_point}</p>
                 </div>
               )}
               {lead.intent_signal && (
@@ -177,7 +182,7 @@ export default function LeadCard({ lead }: { lead: Lead }) {
                   <p className="text-xs font-medium uppercase tracking-wider mb-1.5" style={{ color: "#f59e0b" }}>
                     ⚡ Intent-Signal
                   </p>
-                  <p className="text-sm leading-relaxed" style={{ color: MUTED }}>{lead.intent_signal}</p>
+                  <p className="text-sm leading-relaxed" style={{ color: FG }}>{lead.intent_signal}</p>
                 </div>
               )}
             </div>
