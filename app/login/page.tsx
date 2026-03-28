@@ -94,9 +94,6 @@ export default function LoginPage() {
           />
         </div>
 
-        <h2 className="text-3xl font-bold text-center text-gray-900">
-          {success ? "Willkommen!" : "Willkommen zurück"}
-        </h2>
 
         <form onSubmit={handleLogin} className="flex flex-col gap-4 mt-2">
           <div className="flex flex-col gap-1.5">
