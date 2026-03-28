@@ -1,3 +1,5 @@
+export const unstable_instant = false;
+
 import Image from "next/image";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
@@ -9,12 +11,9 @@ export default async function DashboardLayout({ children }: { children: React.Re
 
   if (!user) redirect("/login");
 
-  const { data: profile } = await supabase
-    .from("profiles").select("agency_name").eq("id", user.id).single();
-
   return (
     <div className="min-h-screen" style={{ backgroundColor: "#02040a" }}>
-      <Sidebar agencyName={profile?.agency_name ?? user.email ?? "Kunde"} email={user.email ?? ""} />
+      <Sidebar />
 
       {/* Mobile top bar */}
       <div className="md:hidden h-14 flex items-center px-5 sticky top-0 z-40 border-b"

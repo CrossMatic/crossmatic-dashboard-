@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { Target, Archive, LogOut } from "lucide-react";
 
@@ -11,9 +12,17 @@ const navItems = [
   { href: "/dashboard/archiv", label: "Archiv", icon: Archive },
 ];
 
-export default function Sidebar({ agencyName, email }: { agencyName: string; email: string }) {
+export default function Sidebar() {
   const pathname = usePathname();
   const router = useRouter();
+  const [email, setEmail] = useState<string>("");
+
+  useEffect(() => {
+    const supabase = createClient();
+    supabase.auth.getUser().then(({ data }) => {
+      setEmail(data.user?.email ?? "");
+    });
+  }, []);
 
   async function handleLogout() {
     const supabase = createClient();

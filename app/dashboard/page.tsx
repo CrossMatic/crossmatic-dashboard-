@@ -1,3 +1,6 @@
+export const unstable_instant = { prefetch: "static" };
+
+import { Suspense } from "react";
 import { createClient } from "@/lib/supabase/server";
 import LeadCard from "@/components/LeadCard";
 
@@ -5,7 +8,15 @@ function formatWeekLabel(dateStr: string): string {
   return new Date(dateStr).toLocaleDateString("de-CH", { day: "2-digit", month: "long", year: "numeric" });
 }
 
-export default async function DashboardPage() {
+export default function DashboardPage() {
+  return (
+    <Suspense fallback={<LeadsSkeleton />}>
+      <LeadsContent />
+    </Suspense>
+  );
+}
+
+async function LeadsContent() {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
 
@@ -21,6 +32,7 @@ export default async function DashboardPage() {
 
   const weeks = Object.keys(grouped).sort((a, b) => b.localeCompare(a));
   const newLeadsCount = weeks[0] ? grouped[weeks[0]]!.length : 0;
+
   return (
     <div className="space-y-10">
       <div>
@@ -31,7 +43,6 @@ export default async function DashboardPage() {
             : `${newLeadsCount} neue${newLeadsCount !== 1 ? "" : "r"} Lead${newLeadsCount !== 1 ? "s" : ""} diese Woche · ${leads.length} insgesamt`}
         </p>
       </div>
-
 
       {weeks.map((week, index) => (
         <section key={week}>
@@ -69,6 +80,23 @@ export default async function DashboardPage() {
           </div>
         </div>
       )}
+    </div>
+  );
+}
+
+function LeadsSkeleton() {
+  return (
+    <div className="space-y-10">
+      <div>
+        <div className="h-8 w-40 rounded-lg animate-pulse bg-white/10 mb-2" />
+        <div className="h-4 w-64 rounded-lg animate-pulse bg-white/5" />
+      </div>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        {[...Array(3)].map((_, i) => (
+          <div key={i} className="rounded-2xl border border-white/10 h-64 animate-pulse"
+            style={{ backgroundColor: "#0d1118" }} />
+        ))}
+      </div>
     </div>
   );
 }

@@ -1,3 +1,6 @@
+export const unstable_instant = { prefetch: "static" };
+
+import { Suspense } from "react";
 import { createClient } from "@/lib/supabase/server";
 import LeadStatusDropdown from "@/components/LeadStatusDropdown";
 import { ExternalLink } from "lucide-react";
@@ -5,16 +8,23 @@ import { ExternalLink } from "lucide-react";
 const FG = "hsl(210, 40%, 98%)";
 const MUTED = "hsl(215, 20%, 65%)";
 const DIM = "hsl(215, 20%, 45%)";
-const BORDER = "hsl(220, 30%, 20%)";
+const BORDER = "hsl(220, 30%, 18%)";
 const CARD = "hsl(220, 30%, 14%)";
-const SECONDARY = "hsl(222, 50%, 7%)";
 const ACCENT = "hsl(210, 100%, 65%)";
 
 function formatDate(dateStr: string): string {
   return new Date(dateStr).toLocaleDateString("de-CH", { day: "2-digit", month: "short", year: "numeric" });
 }
 
-export default async function ArchivPage() {
+export default function ArchivPage() {
+  return (
+    <Suspense fallback={<ArchivSkeleton />}>
+      <ArchivContent />
+    </Suspense>
+  );
+}
+
+async function ArchivContent() {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
 
@@ -31,26 +41,26 @@ export default async function ArchivPage() {
       <div>
         <h1 className="text-2xl font-bold" style={{ color: FG }}>Archiv</h1>
         <p className="mt-1.5 text-sm" style={{ color: MUTED }}>
-          Alle {leads?.length ?? 0} Leads auf einen Blick
+          Alle {leads.length} Leads auf einen Blick
         </p>
       </div>
 
-      {leads && leads.length > 0 ? (
-        <div className="rounded-xl border overflow-hidden" style={{ borderColor: BORDER }}>
+      {leads.length > 0 ? (
+        <div className="rounded-xl border overflow-hidden" style={{ borderColor: "hsl(220, 30%, 20%)" }}>
           <div className="grid grid-cols-[40px_1fr_140px_160px_130px_100px] gap-4 px-5 py-3 border-b text-xs font-medium uppercase tracking-wider"
-            style={{ backgroundColor: SECONDARY, borderColor: BORDER, color: DIM }}>
+            style={{ backgroundColor: "hsl(222, 50%, 7%)", borderColor: "hsl(220, 30%, 20%)", color: DIM }}>
             <div /><div>Unternehmen</div><div>Branche</div><div>Kontakt</div><div>Status</div><div>Woche</div>
           </div>
 
           {leads.map((lead) => (
             <div key={lead.id}
               className="grid grid-cols-[40px_1fr_140px_160px_130px_100px] gap-4 px-5 py-4 items-center border-b last:border-0 transition-colors hover:bg-white/5"
-              style={{ borderColor: "hsl(220, 30%, 18%)", backgroundColor: CARD }}>
+              style={{ borderColor: BORDER, backgroundColor: CARD }}>
 
               <div>
                 {lead.logo_url ? (
                   <img src={lead.logo_url} alt="" className="w-8 h-8 rounded-md object-contain"
-                    style={{ backgroundColor: SECONDARY }} />
+                    style={{ backgroundColor: "hsl(222, 50%, 7%)" }} />
                 ) : (
                   <div className="w-8 h-8 rounded-md flex items-center justify-center text-xs font-bold"
                     style={{ backgroundColor: "hsl(210, 100%, 65%, 0.1)", color: ACCENT }}>
@@ -103,6 +113,23 @@ export default async function ArchivPage() {
           </div>
         </div>
       )}
+    </div>
+  );
+}
+
+function ArchivSkeleton() {
+  return (
+    <div className="space-y-8">
+      <div>
+        <div className="h-8 w-32 rounded-lg animate-pulse bg-white/10 mb-2" />
+        <div className="h-4 w-48 rounded-lg animate-pulse bg-white/5" />
+      </div>
+      <div className="rounded-xl border overflow-hidden" style={{ borderColor: "hsl(220, 30%, 20%)" }}>
+        {[...Array(4)].map((_, i) => (
+          <div key={i} className="h-16 border-b animate-pulse bg-white/5"
+            style={{ borderColor: "hsl(220, 30%, 18%)" }} />
+        ))}
+      </div>
     </div>
   );
 }
