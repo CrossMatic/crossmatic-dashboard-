@@ -17,7 +17,6 @@ export default async function DashboardPage() {
     .eq("client_id", user!.id)
     .order("week_added", { ascending: false });
 
-  // Leads nach Woche gruppieren
   const grouped: Record<string, typeof leads> = {};
   for (const lead of leads ?? []) {
     const key = lead.week_added ?? "unbekannt";
@@ -34,24 +33,22 @@ export default async function DashboardPage() {
     <div className="space-y-10">
       {/* Header */}
       <div>
-        <h1 className="text-2xl font-bold" style={{ color: "hsl(210, 40%, 98%)" }}>
-          Ihre Leads
-        </h1>
-        <p className="mt-1.5 text-sm" style={{ color: "hsl(215, 20%, 55%)" }}>
+        <h1 className="text-2xl font-bold text-gray-900">Ihre Leads</h1>
+        <p className="mt-1.5 text-sm text-gray-500">
           {!leads || leads.length === 0
             ? "Noch keine Leads vorhanden."
             : `${newLeadsCount} neue${newLeadsCount !== 1 ? "" : "r"} Lead${newLeadsCount !== 1 ? "s" : ""} diese Woche · ${leads.length} insgesamt`}
         </p>
       </div>
 
-      {/* Banner: neue Leads */}
+      {/* Banner */}
       {allUncontacted.length > 0 && (
         <div
           className="flex items-center gap-3 px-4 py-3 rounded-xl border text-sm"
           style={{
-            background: "hsl(210, 100%, 65%, 0.07)",
-            borderColor: "hsl(210, 100%, 65%, 0.2)",
-            color: "hsl(210, 100%, 75%)",
+            background: "hsl(210, 100%, 55%, 0.06)",
+            borderColor: "hsl(210, 100%, 55%, 0.2)",
+            color: "hsl(210, 100%, 45%)",
           }}
         >
           <Sparkles size={16} className="shrink-0" />
@@ -63,17 +60,17 @@ export default async function DashboardPage() {
         </div>
       )}
 
-      {/* Gruppiert nach Woche */}
+      {/* Wochengruppen */}
       {weeks.map((week, index) => (
         <section key={week}>
           <div className="flex items-center gap-3 mb-5">
-            <h2 className="text-base font-semibold" style={{ color: "hsl(210, 40%, 90%)" }}>
+            <h2 className="text-base font-semibold text-gray-700">
               {week === "unbekannt" ? "Weitere Leads" : `Woche vom ${formatWeekLabel(week)}`}
             </h2>
             {index === 0 && (
               <span
                 className="text-xs px-2.5 py-0.5 rounded-full font-medium"
-                style={{ background: "hsl(210, 100%, 65%, 0.15)", color: "hsl(210, 100%, 65%)" }}
+                style={{ background: "hsl(210, 100%, 55%, 0.1)", color: "hsl(210, 100%, 50%)" }}
               >
                 {grouped[week]!.length} neu
               </span>
@@ -89,21 +86,18 @@ export default async function DashboardPage() {
 
       {/* Empty State */}
       {(!leads || leads.length === 0) && (
-        <div
-          className="rounded-2xl border p-16 text-center flex flex-col items-center gap-4"
-          style={{ borderColor: "hsl(220, 30%, 20%)", background: "hsl(220, 30%, 10%)" }}
-        >
+        <div className="rounded-2xl border border-gray-100 bg-white p-16 text-center flex flex-col items-center gap-4">
           <div
             className="w-16 h-16 rounded-2xl flex items-center justify-center text-2xl"
-            style={{ background: "hsl(210, 100%, 65%, 0.1)" }}
+            style={{ background: "hsl(210, 100%, 55%, 0.08)" }}
           >
             🎯
           </div>
           <div>
-            <p className="text-base font-semibold mb-1" style={{ color: "hsl(210, 40%, 98%)" }}>
+            <p className="text-base font-semibold text-gray-800 mb-1">
               Ihre ersten Leads sind unterwegs
             </p>
-            <p className="text-sm" style={{ color: "hsl(215, 20%, 55%)" }}>
+            <p className="text-sm text-gray-400">
               CrossMatic liefert wöchentlich tiefgehend recherchierte Kontakte direkt hier.
             </p>
           </div>

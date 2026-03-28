@@ -25,22 +25,16 @@ export default function Sidebar({ agencyName }: { agencyName: string }) {
   return (
     <>
       {/* Desktop Sidebar */}
-      <aside
-        className="hidden md:flex flex-col fixed left-0 top-0 h-full w-56 border-r z-40"
-        style={{ background: "hsl(222, 50%, 7%)", borderColor: "hsl(220, 30%, 16%)" }}
-      >
+      <aside className="hidden md:flex flex-col fixed left-0 top-0 h-full w-56 border-r z-40 bg-white border-gray-100">
         {/* Logo */}
-        <div
-          className="h-16 flex items-center px-6 border-b shrink-0"
-          style={{ borderColor: "hsl(220, 30%, 16%)" }}
-        >
-          <span className="text-lg font-bold tracking-tight" style={{ color: "hsl(210, 40%, 98%)" }}>
-            Cross<span style={{ color: "hsl(210, 100%, 65%)" }}>Matic</span>
+        <div className="h-16 flex items-center px-6 border-b border-gray-100 shrink-0">
+          <span className="text-lg font-bold tracking-tight text-gray-900">
+            Cross<span style={{ color: "hsl(210, 100%, 55%)" }}>Matic</span>
           </span>
         </div>
 
         {/* Navigation */}
-        <nav className="flex-1 px-3 py-5 space-y-1">
+        <nav className="flex-1 px-3 py-5 space-y-0.5">
           {navItems.map(({ href, label, icon: Icon }) => {
             const isActive = pathname === href;
             return (
@@ -49,8 +43,8 @@ export default function Sidebar({ agencyName }: { agencyName: string }) {
                 href={href}
                 className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors"
                 style={{
-                  background: isActive ? "hsl(210, 100%, 65%, 0.12)" : "transparent",
-                  color: isActive ? "hsl(210, 100%, 65%)" : "hsl(215, 20%, 60%)",
+                  background: isActive ? "hsl(210, 100%, 55%, 0.08)" : "transparent",
+                  color: isActive ? "hsl(210, 100%, 50%)" : "#6b7280",
                 }}
               >
                 <Icon size={16} />
@@ -61,17 +55,14 @@ export default function Sidebar({ agencyName }: { agencyName: string }) {
         </nav>
 
         {/* Bottom */}
-        <div className="p-4 border-t space-y-2" style={{ borderColor: "hsl(220, 30%, 16%)" }}>
+        <div className="p-4 border-t border-gray-100 space-y-2">
           <div className="px-3 pb-1">
-            <p className="text-xs mb-0.5" style={{ color: "hsl(215, 20%, 40%)" }}>Eingeloggt als</p>
-            <p className="text-sm font-medium truncate" style={{ color: "hsl(210, 40%, 98%)" }}>
-              {agencyName}
-            </p>
+            <p className="text-xs text-gray-400 mb-0.5">Eingeloggt als</p>
+            <p className="text-sm font-medium text-gray-800 truncate">{agencyName}</p>
           </div>
           <button
             onClick={handleLogout}
-            className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-opacity hover:opacity-70 cursor-pointer"
-            style={{ color: "hsl(215, 20%, 50%)" }}
+            className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-gray-400 transition-colors hover:text-gray-600 hover:bg-gray-50 cursor-pointer"
           >
             <LogOut size={15} />
             Abmelden
@@ -80,10 +71,7 @@ export default function Sidebar({ agencyName }: { agencyName: string }) {
       </aside>
 
       {/* Mobile Bottom Nav */}
-      <nav
-        className="md:hidden fixed bottom-0 left-0 right-0 z-50 border-t flex"
-        style={{ background: "hsl(222, 50%, 7%)", borderColor: "hsl(220, 30%, 16%)" }}
-      >
+      <nav className="md:hidden fixed bottom-0 left-0 right-0 z-50 border-t border-gray-100 flex bg-white">
         {navItems.map(({ href, label, icon: Icon }) => {
           const isActive = pathname === href;
           return (
@@ -91,7 +79,7 @@ export default function Sidebar({ agencyName }: { agencyName: string }) {
               key={href}
               href={href}
               className="flex-1 flex flex-col items-center py-3 gap-1 text-xs font-medium transition-colors"
-              style={{ color: isActive ? "hsl(210, 100%, 65%)" : "hsl(215, 20%, 50%)" }}
+              style={{ color: isActive ? "hsl(210, 100%, 50%)" : "#9ca3af" }}
             >
               <Icon size={18} />
               {label}
