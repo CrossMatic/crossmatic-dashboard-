@@ -98,7 +98,7 @@ export default function LoginPage() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="border-gray-200 hover:scale-105 transition-transform duration-200"
+              className="border-gray-200 text-gray-900 hover:scale-105 transition-transform duration-200"
             />
           </div>
 
@@ -111,7 +111,7 @@ export default function LoginPage() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              className="border-gray-200 hover:scale-105 transition-transform duration-200"
+              className="border-gray-200 text-gray-900 hover:scale-105 transition-transform duration-200"
             />
           </div>
 
