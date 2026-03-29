@@ -18,8 +18,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="de" className={`${inter.variable} min-h-dvh antialiased`}>
-      <body className="min-h-dvh">{children}</body>
+    <html lang="de" className={`${inter.variable} min-h-dvh bg-background`}>
+      <body className="min-h-dvh bg-background">{children}</body>
     </html>
   );
 }

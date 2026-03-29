@@ -12,12 +12,11 @@ export default async function DashboardLayout({ children }: { children: React.Re
   if (!user) redirect("/login");
 
   return (
-    <div className="min-h-dvh bg-background">
+    <div className="min-h-dvh bg-background flex flex-col">
       <Sidebar />
 
       {/* Mobile top bar */}
-      <div className="md:hidden h-14 flex items-center px-5 sticky top-0 z-40 border-b"
-        style={{ backgroundColor: "#02040a", borderColor: "hsl(220, 30%, 20%)" }}>
+      <div className="md:hidden h-14 flex items-center px-5 sticky top-0 z-40 border-b border-border bg-background">
         <Image src="/crossmatic-logo.png" alt="CrossMatic" width={120} height={30} className="object-contain" priority />
       </div>
 

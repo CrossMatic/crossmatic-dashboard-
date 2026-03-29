@@ -75,14 +75,25 @@
   * {
     @apply border-border outline-ring/50;
   }
-  html, body {
-    @apply bg-background;
-  }
-  body {
-    @apply text-foreground;
-  }
+  /* Einheitlicher Seitenhintergrund: html + body + fixierte Ebene verhindert „Streifen“
+     (z. B. wenn min-height/100vh und Canvas-Hintergrund auseinanderlaufen). */
   html {
     @apply font-sans;
+    min-height: 100dvh;
+    background-color: var(--background);
+    color-scheme: dark;
+  }
+  body {
+    @apply text-foreground m-0 min-h-dvh bg-background antialiased;
+    background-color: var(--background);
+  }
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background-color: var(--background);
+    pointer-events: none;
   }
 }
 
