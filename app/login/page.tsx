@@ -99,7 +99,7 @@ export default function LoginPage() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="border-gray-200 text-gray-900 hover:scale-105 transition-transform duration-200 [&:-webkit-autofill]:bg-white [&:-webkit-autofill]:shadow-[0_0_0_1000px_white_inset]"
+              className="border-gray-200 text-gray-900 hover:scale-105 transition-transform duration-200 [&:-webkit-autofill]:shadow-[0_0_0_1000px_white_inset] [&:-webkit-autofill]:[-webkit-text-fill-color:#111827]"
             />
           </div>
 
@@ -113,7 +113,7 @@ export default function LoginPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                className="border-gray-200 text-gray-900 hover:scale-105 transition-transform duration-200 pr-10 [&:-webkit-autofill]:bg-white [&:-webkit-autofill]:shadow-[0_0_0_1000px_white_inset]"
+                className="border-gray-200 text-gray-900 hover:scale-105 transition-transform duration-200 pr-10 [&:-webkit-autofill]:shadow-[0_0_0_1000px_white_inset] [&:-webkit-autofill]:[-webkit-text-fill-color:#111827]"
               />
               <button
                 type="button"
