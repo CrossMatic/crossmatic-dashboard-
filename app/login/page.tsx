@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
+import { Eye, EyeOff } from "lucide-react";
 
 interface ConfettiParticle {
   id: number;
@@ -24,6 +25,7 @@ export default function LoginPage() {
   const [loading, setLoading] = React.useState(false);
   const [success, setSuccess] = React.useState(false);
   const [particles, setParticles] = React.useState<ConfettiParticle[]>([]);
+  const [showPassword, setShowPassword] = React.useState(false);
 
   async function handleLogin(e: React.FormEvent) {
     e.preventDefault();
@@ -97,21 +99,31 @@ export default function LoginPage() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="border-gray-200 text-gray-900 hover:scale-105 transition-transform duration-200"
+              className="border-gray-200 text-gray-900 hover:scale-105 transition-transform duration-200 [&:-webkit-autofill]:bg-white [&:-webkit-autofill]:shadow-[0_0_0_1000px_white_inset]"
             />
           </div>
 
           <div className="flex flex-col gap-1.5">
             <Label htmlFor="password" className="text-sm font-medium text-gray-700">Passwort</Label>
-            <Input
-              id="password"
-              type="password"
-              placeholder="••••••••"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              className="border-gray-200 text-gray-900 hover:scale-105 transition-transform duration-200"
-            />
+            <div className="relative">
+              <Input
+                id="password"
+                type={showPassword ? "text" : "password"}
+                placeholder="••••••••"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                className="border-gray-200 text-gray-900 hover:scale-105 transition-transform duration-200 pr-10 [&:-webkit-autofill]:bg-white [&:-webkit-autofill]:shadow-[0_0_0_1000px_white_inset]"
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword((v) => !v)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                tabIndex={-1}
+              >
+                {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+              </button>
+            </div>
           </div>
 
           {error && (
