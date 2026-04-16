@@ -21,6 +21,7 @@ interface Lead {
   fit_description: string | null;
   pain_point: string | null;
   intent_signal: string | null;
+  konfidenz_score: number | null;
   status: string | null;
   week_added: string | null;
 }
@@ -67,7 +68,31 @@ export default function LeadCard({ lead }: { lead: Lead }) {
               )}
             </div>
           </div>
-          <LeadStatusDropdown leadId={lead.id} initialStatus={lead.status} />
+          <div className="flex items-center gap-2 shrink-0">
+            {lead.konfidenz_score !== null && lead.konfidenz_score !== undefined && (
+              <div className="flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold"
+                style={{
+                  backgroundColor: lead.konfidenz_score >= 8
+                    ? "rgba(34,197,94,0.12)"
+                    : lead.konfidenz_score >= 5
+                    ? "rgba(234,179,8,0.12)"
+                    : "rgba(239,68,68,0.12)",
+                  color: lead.konfidenz_score >= 8
+                    ? "#22c55e"
+                    : lead.konfidenz_score >= 5
+                    ? "#eab308"
+                    : "#ef4444",
+                  border: `1px solid ${lead.konfidenz_score >= 8
+                    ? "rgba(34,197,94,0.25)"
+                    : lead.konfidenz_score >= 5
+                    ? "rgba(234,179,8,0.25)"
+                    : "rgba(239,68,68,0.25)"}`,
+                }}>
+                ⭐ {lead.konfidenz_score}/10
+              </div>
+            )}
+            <LeadStatusDropdown leadId={lead.id} initialStatus={lead.status} />
+          </div>
         </div>
 
         <div className="flex items-center gap-4 mt-3 flex-wrap">
@@ -159,10 +184,19 @@ export default function LeadCard({ lead }: { lead: Lead }) {
 
           {analyseOpen && (
             <div className="px-6 pb-6 space-y-4">
+              {lead.intent_signal && (
+                <div className="rounded-lg p-3.5"
+                  style={{ backgroundColor: "rgba(234,179,8,0.07)", border: "1px solid rgba(234,179,8,0.2)" }}>
+                  <p className="text-xs font-medium uppercase tracking-wider mb-1.5" style={{ color: "#f59e0b" }}>
+                    ⚡ Strategischer Trigger
+                  </p>
+                  <p className="text-sm leading-relaxed" style={{ color: FG }}>{lead.intent_signal}</p>
+                </div>
+              )}
               {lead.fit_description && (
                 <div>
                   <p className="text-xs font-medium uppercase tracking-wider mb-1.5" style={{ color: ACCENT }}>
-                    Agentur-Fit
+                    Warum der perfekte Partner
                   </p>
                   <p className="text-sm leading-relaxed" style={{ color: FG }}>{lead.fit_description}</p>
                 </div>
@@ -173,15 +207,6 @@ export default function LeadCard({ lead }: { lead: Lead }) {
                     Pain Point
                   </p>
                   <p className="text-sm leading-relaxed" style={{ color: FG }}>{lead.pain_point}</p>
-                </div>
-              )}
-              {lead.intent_signal && (
-                <div className="rounded-lg p-3.5"
-                  style={{ backgroundColor: "rgba(234,179,8,0.07)", border: "1px solid rgba(234,179,8,0.2)" }}>
-                  <p className="text-xs font-medium uppercase tracking-wider mb-1.5" style={{ color: "#f59e0b" }}>
-                    ⚡ Intent-Signal
-                  </p>
-                  <p className="text-sm leading-relaxed" style={{ color: FG }}>{lead.intent_signal}</p>
                 </div>
               )}
             </div>
