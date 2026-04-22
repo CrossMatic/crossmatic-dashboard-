@@ -149,6 +149,24 @@ export default function LeadCard({ lead }: { lead: Lead }) {
             </a>
           </div>
         )}
+        {lead.website && (
+          <div className="flex items-center gap-2.5">
+            <span className="text-sm">🌐</span>
+            <a
+              href={lead.website.startsWith("http") ? lead.website : `https://${lead.website}`}
+              target="_blank" rel="noopener noreferrer"
+              className="text-sm hover:underline" style={{ color: ACCENT }}
+            >
+              {lead.website.replace(/^https?:\/\//, "")}
+            </a>
+          </div>
+        )}
+        {lead.location && (
+          <div className="flex items-center gap-2.5">
+            <span className="text-sm">📍</span>
+            <span className="text-sm" style={{ color: FG }}>{lead.location}</span>
+          </div>
+        )}
         {lead.linkedin_url && (
           <div className="flex items-center gap-2.5">
             <span className="text-sm">🔗</span>
