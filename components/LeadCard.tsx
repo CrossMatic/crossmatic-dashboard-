@@ -95,20 +95,6 @@ export default function LeadCard({ lead }: { lead: Lead }) {
           </div>
         </div>
 
-        <div className="flex items-center gap-4 mt-3 flex-wrap">
-          {lead.website && (
-            <a
-              href={lead.website.startsWith("http") ? lead.website : `https://${lead.website}`}
-              target="_blank" rel="noopener noreferrer"
-              className="text-xs hover:underline" style={{ color: ACCENT }}
-            >
-              🌐 {lead.website.replace(/^https?:\/\//, "")}
-            </a>
-          )}
-          {lead.location && (
-            <span className="text-xs" style={{ color: MUTED }}>📍 {lead.location}</span>
-          )}
-        </div>
 
         {lead.description && (
           <p className="text-sm leading-relaxed mt-3" style={{ color: FG }}>
