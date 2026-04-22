@@ -227,7 +227,7 @@ export default function LeadCard({ lead }: { lead: Lead }) {
                         {item.title && (
                           <span className="text-sm font-semibold" style={{ color: FG }}>{item.title}</span>
                         )}
-                        <span className="text-sm leading-relaxed" style={{ color: MUTED }}>{item.body}</span>
+                        <span className="text-sm leading-relaxed" style={{ color: FG }}>{item.body}</span>
                       </li>
                     ))}
                   </ul>
