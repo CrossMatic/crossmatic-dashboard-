@@ -26,6 +26,17 @@ interface Lead {
   week_added: string | null;
 }
 
+function parseSolutions(text: string): { title: string; body: string }[] {
+  const parts = text.split(/\.\s+(?=[A-ZÄÖÜC])/);
+  return parts.map(part => {
+    const colonIdx = part.indexOf(': ');
+    if (colonIdx > 0 && colonIdx < 40) {
+      return { title: part.slice(0, colonIdx), body: part.slice(colonIdx + 2).replace(/\.$/, '').trim() };
+    }
+    return { title: '', body: part.replace(/\.$/, '').trim() };
+  }).filter(p => p.body);
+}
+
 const FG     = "hsl(210, 40%, 98%)";   // near-white — all main text
 const MUTED  = "hsl(215, 20%, 65%)";   // supporting text
 const DIM    = "hsl(215, 20%, 45%)";   // labels / de-emphasized
@@ -207,10 +218,19 @@ export default function LeadCard({ lead }: { lead: Lead }) {
               )}
               {lead.fit_description && (
                 <div>
-                  <p className="text-xs font-medium uppercase tracking-wider mb-1.5" style={{ color: ACCENT }}>
+                  <p className="text-xs font-medium uppercase tracking-wider mb-3" style={{ color: ACCENT }}>
                     Mögliche Lösungen
                   </p>
-                  <p className="text-sm leading-relaxed" style={{ color: FG }}>{lead.fit_description}</p>
+                  <ul className="space-y-3">
+                    {parseSolutions(lead.fit_description).map((item, i) => (
+                      <li key={i} className="flex flex-col gap-0.5">
+                        {item.title && (
+                          <span className="text-sm font-semibold" style={{ color: FG }}>{item.title}</span>
+                        )}
+                        <span className="text-sm leading-relaxed" style={{ color: MUTED }}>{item.body}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               )}
             </div>
