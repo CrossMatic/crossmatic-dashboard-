@@ -223,7 +223,7 @@ export default function LeadCard({ lead }: { lead: Lead }) {
                   </p>
                   <ul className="space-y-3">
                     {parseSolutions(lead.fit_description).map((item, i) => (
-                      <li key={i} className="flex flex-col gap-0.5">
+                      <li key={i} className="flex flex-col gap-1.5">
                         {item.title && (
                           <span className="text-sm font-semibold" style={{ color: FG }}>{item.title}</span>
                         )}
