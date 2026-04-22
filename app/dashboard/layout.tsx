@@ -20,7 +20,7 @@ export default async function DashboardLayout({ children }: { children: React.Re
         <Image src="/crossmatic-logo.png" alt="CrossMatic" width={120} height={30} className="object-contain" priority />
       </div>
 
-      <main className="md:ml-56 px-5 sm:px-8 py-10 pb-28 md:pb-12 max-w-5xl">
+      <main className="md:ml-56 px-5 sm:px-8 py-10 pb-28 md:pb-12 max-w-7xl">
         {children}
       </main>
     </div>
