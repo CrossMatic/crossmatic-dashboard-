@@ -197,20 +197,20 @@ export default function LeadCard({ lead }: { lead: Lead }) {
                   <p className="text-sm leading-relaxed" style={{ color: FG }}>{lead.intent_signal}</p>
                 </div>
               )}
-              {lead.fit_description && (
-                <div>
-                  <p className="text-xs font-medium uppercase tracking-wider mb-1.5" style={{ color: ACCENT }}>
-                    Warum der perfekte Partner
-                  </p>
-                  <p className="text-sm leading-relaxed" style={{ color: FG }}>{lead.fit_description}</p>
-                </div>
-              )}
               {lead.pain_point && (
                 <div>
                   <p className="text-xs font-medium uppercase tracking-wider mb-1.5" style={{ color: ACCENT }}>
                     Pain Point
                   </p>
                   <p className="text-sm leading-relaxed" style={{ color: FG }}>{lead.pain_point}</p>
+                </div>
+              )}
+              {lead.fit_description && (
+                <div>
+                  <p className="text-xs font-medium uppercase tracking-wider mb-1.5" style={{ color: ACCENT }}>
+                    Mögliche Lösungen
+                  </p>
+                  <p className="text-sm leading-relaxed" style={{ color: FG }}>{lead.fit_description}</p>
                 </div>
               )}
             </div>
