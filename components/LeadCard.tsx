@@ -21,6 +21,8 @@ interface Lead {
   fit_description: string | null;
   pain_point: string | null;
   intent_signal: string | null;
+  opportunity: string | null;
+  strategic_hook: string | null;
   konfidenz_score: number | null;
   status: string | null;
   week_added: string | null;
@@ -44,7 +46,7 @@ const ACCENT = "hsl(210, 100%, 65%)";
 
 export default function LeadCard({ lead }: { lead: Lead }) {
   const [analyseOpen, setAnalyseOpen] = useState(false);
-  const hasAnalyse = lead.fit_description || lead.pain_point || lead.intent_signal;
+  const hasAnalyse = lead.fit_description || lead.pain_point || lead.intent_signal || lead.opportunity || lead.strategic_hook;
 
   return (
     <div
@@ -216,6 +218,14 @@ export default function LeadCard({ lead }: { lead: Lead }) {
                   <p className="text-sm leading-relaxed" style={{ color: FG }}>{lead.pain_point}</p>
                 </div>
               )}
+              {lead.opportunity && (
+                <div>
+                  <p className="text-xs font-medium uppercase tracking-wider mb-1.5" style={{ color: ACCENT }}>
+                    Möglichkeit
+                  </p>
+                  <p className="text-sm leading-relaxed" style={{ color: FG }}>{lead.opportunity}</p>
+                </div>
+              )}
               {lead.fit_description && (
                 <div>
                   <p className="text-xs font-medium uppercase tracking-wider mb-3" style={{ color: ACCENT }}>
@@ -231,6 +241,14 @@ export default function LeadCard({ lead }: { lead: Lead }) {
                       </li>
                     ))}
                   </ul>
+                </div>
+              )}
+              {lead.strategic_hook && (
+                <div>
+                  <p className="text-xs font-medium uppercase tracking-wider mb-1.5" style={{ color: ACCENT }}>
+                    Strategischer Aufhänger
+                  </p>
+                  <p className="text-sm leading-relaxed" style={{ color: FG }}>{lead.strategic_hook}</p>
                 </div>
               )}
             </div>
