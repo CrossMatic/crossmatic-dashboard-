@@ -35,73 +35,55 @@ const ACCENT = "hsl(210, 100%, 65%)";
 export default function LeadCard({ lead }: { lead: Lead }) {
   return (
     <div
-      className="surface-glow-hover rounded-2xl border border-white/10 flex flex-col overflow-hidden"
+      className="surface-glow-hover rounded-2xl border border-white/10 flex flex-col"
       style={{ backgroundColor: "#0d1118" }}
     >
-      {/* Header — klickbar zur Detail-Seite */}
-      <Link href={`/dashboard/leads/${lead.id}`} className="block p-6 pb-4 hover:opacity-90 transition-opacity">
-        <div className="flex items-start justify-between gap-3">
-          <div className="flex items-center gap-3 min-w-0">
-            {lead.logo_url ? (
-              <img
-                src={lead.logo_url}
-                alt={`${lead.company_name} Logo`}
-                className="w-10 h-10 rounded-lg object-contain shrink-0"
-                style={{ backgroundColor: "hsl(220, 30%, 20%)" }}
-              />
-            ) : (
-              <div
-                className="w-10 h-10 rounded-lg flex items-center justify-center shrink-0 text-sm font-bold"
-                style={{ backgroundColor: "hsl(210, 100%, 65%, 0.12)", color: ACCENT }}
-              >
-                {lead.company_name.charAt(0).toUpperCase()}
-              </div>
-            )}
-            <div className="min-w-0">
-              <h2 className="text-base font-semibold leading-tight truncate" style={{ color: FG }}>
-                {lead.company_name}
-              </h2>
-              {lead.industry && (
-                <span className="text-xs" style={{ color: MUTED }}>{lead.industry}</span>
-              )}
-            </div>
-          </div>
-          {lead.konfidenz_score !== null && lead.konfidenz_score !== undefined && (
-            <div className="flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold shrink-0"
-              style={{
-                backgroundColor: lead.konfidenz_score >= 8
-                  ? "rgba(34,197,94,0.12)"
-                  : lead.konfidenz_score >= 5
-                  ? "rgba(234,179,8,0.12)"
-                  : "rgba(239,68,68,0.12)",
-                color: lead.konfidenz_score >= 8
-                  ? "#22c55e"
-                  : lead.konfidenz_score >= 5
-                  ? "#eab308"
-                  : "#ef4444",
-                border: `1px solid ${lead.konfidenz_score >= 8
-                  ? "rgba(34,197,94,0.25)"
-                  : lead.konfidenz_score >= 5
-                  ? "rgba(234,179,8,0.25)"
-                  : "rgba(239,68,68,0.25)"}`,
-              }}>
-              ⭐ {lead.konfidenz_score}/10
+      {/* Header: Logo + Name + Status oben rechts */}
+      <div className="flex items-start gap-3 p-6 pb-4">
+        <Link href={`/dashboard/leads/${lead.id}`} className="flex items-center gap-3 min-w-0 flex-1">
+          {lead.logo_url ? (
+            <img
+              src={lead.logo_url}
+              alt={`${lead.company_name} Logo`}
+              className="w-10 h-10 rounded-lg object-contain shrink-0"
+              style={{ backgroundColor: "hsl(220, 30%, 20%)" }}
+            />
+          ) : (
+            <div
+              className="w-10 h-10 rounded-lg flex items-center justify-center shrink-0 text-sm font-bold"
+              style={{ backgroundColor: "hsl(210, 100%, 65%, 0.12)", color: ACCENT }}
+            >
+              {lead.company_name.charAt(0).toUpperCase()}
             </div>
           )}
+          <div className="min-w-0">
+            <h2 className="text-base font-semibold leading-tight truncate" style={{ color: FG }}>
+              {lead.company_name}
+            </h2>
+            {lead.industry && (
+              <span className="text-xs" style={{ color: MUTED }}>{lead.industry}</span>
+            )}
+          </div>
+        </Link>
+        <div className="shrink-0 pt-0.5">
+          <LeadStatusDropdown leadId={lead.id} initialStatus={lead.status} />
         </div>
+      </div>
 
-        {lead.description && (
-          <p className="text-sm leading-relaxed mt-3 line-clamp-3" style={{ color: MUTED }}>
+      {/* Beschreibung */}
+      {lead.description && (
+        <Link href={`/dashboard/leads/${lead.id}`} className="block px-6 pb-4 hover:opacity-80 transition-opacity">
+          <p className="text-sm leading-relaxed line-clamp-3" style={{ color: MUTED }}>
             {lead.description}
           </p>
-        )}
-      </Link>
+        </Link>
+      )}
 
       <div className="h-px mx-6 bg-white/10" />
 
-      {/* Kontaktperson */}
-      <div className="p-6 py-4 space-y-2">
-        <p className="text-xs font-medium uppercase tracking-wider mb-2.5" style={{ color: DIM }}>
+      {/* Alle Kontaktinfos */}
+      <div className="p-6 py-4 space-y-2.5">
+        <p className="text-xs font-medium uppercase tracking-wider mb-3" style={{ color: DIM }}>
           Entscheiderperson
         </p>
         {lead.contact_name && (
@@ -113,18 +95,85 @@ export default function LeadCard({ lead }: { lead: Lead }) {
             )}
           </div>
         )}
+        {lead.contact_email && (
+          <div className="flex items-center gap-2.5">
+            <span className="text-sm">✉️</span>
+            <a href={`mailto:${lead.contact_email}`} className="text-sm hover:underline" style={{ color: FG }}>
+              {lead.contact_email}
+            </a>
+          </div>
+        )}
+        {lead.phone && (
+          <div className="flex items-center gap-2.5">
+            <span className="text-sm">📞</span>
+            <a href={`tel:${lead.phone}`} className="text-sm hover:underline" style={{ color: FG }}>
+              {lead.phone}
+            </a>
+          </div>
+        )}
+        {lead.website && (
+          <div className="flex items-center gap-2.5">
+            <span className="text-sm">🌐</span>
+            <a
+              href={lead.website.startsWith("http") ? lead.website : `https://${lead.website}`}
+              target="_blank" rel="noopener noreferrer"
+              className="text-sm hover:underline truncate" style={{ color: ACCENT }}
+            >
+              {lead.website.replace(/^https?:\/\//, "")}
+            </a>
+          </div>
+        )}
         {lead.location && (
           <div className="flex items-center gap-2.5">
             <span className="text-sm">📍</span>
             <span className="text-sm" style={{ color: FG }}>{lead.location}</span>
           </div>
         )}
+        {lead.linkedin_url && (
+          <div className="flex items-center gap-2.5">
+            <span className="text-sm">🔗</span>
+            <a href={lead.linkedin_url} target="_blank" rel="noopener noreferrer"
+              className="text-sm hover:underline" style={{ color: ACCENT }}>
+              LinkedIn-Profil
+            </a>
+          </div>
+        )}
+        {lead.preferred_contact_channel && (
+          <div className="flex items-center gap-2.5 pt-0.5">
+            <span className="text-sm">💬</span>
+            <span className="text-xs px-2 py-0.5 rounded-md"
+              style={{ backgroundColor: "hsl(210, 100%, 65%, 0.1)", color: ACCENT }}>
+              {lead.preferred_contact_channel}
+            </span>
+          </div>
+        )}
       </div>
 
-      {/* Footer — Status + "Details" Link */}
+      {/* Footer */}
       <div className="mt-auto h-px mx-6 bg-white/10" />
       <div className="px-6 py-3.5 flex items-center justify-between">
-        <LeadStatusDropdown leadId={lead.id} initialStatus={lead.status} />
+        {lead.konfidenz_score !== null && lead.konfidenz_score !== undefined ? (
+          <div className="flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold"
+            style={{
+              backgroundColor: lead.konfidenz_score >= 8
+                ? "rgba(34,197,94,0.12)"
+                : lead.konfidenz_score >= 5
+                ? "rgba(234,179,8,0.12)"
+                : "rgba(239,68,68,0.12)",
+              color: lead.konfidenz_score >= 8
+                ? "#22c55e"
+                : lead.konfidenz_score >= 5
+                ? "#eab308"
+                : "#ef4444",
+              border: `1px solid ${lead.konfidenz_score >= 8
+                ? "rgba(34,197,94,0.25)"
+                : lead.konfidenz_score >= 5
+                ? "rgba(234,179,8,0.25)"
+                : "rgba(239,68,68,0.25)"}`,
+            }}>
+            ⭐ {lead.konfidenz_score}/10
+          </div>
+        ) : <span />}
         <Link
           href={`/dashboard/leads/${lead.id}`}
           className="text-xs font-medium px-3 py-1.5 rounded-lg transition-colors hover:bg-white/5"
