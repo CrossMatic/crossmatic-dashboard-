@@ -38,24 +38,9 @@ export default function LeadCard({ lead }: { lead: Lead }) {
       className="surface-glow-hover rounded-2xl border border-white/10 flex flex-col"
       style={{ backgroundColor: "#0d1118" }}
     >
-      {/* Header: Logo + Name + Status oben rechts */}
+      {/* Header: Name + Status oben rechts */}
       <div className="flex items-start gap-3 p-6 pb-4">
-        <Link href={`/dashboard/leads/${lead.id}`} className="flex items-center gap-3 min-w-0 flex-1">
-          {lead.logo_url ? (
-            <img
-              src={lead.logo_url}
-              alt={`${lead.company_name} Logo`}
-              className="w-10 h-10 rounded-lg object-contain shrink-0"
-              style={{ backgroundColor: "hsl(220, 30%, 20%)" }}
-            />
-          ) : (
-            <div
-              className="w-10 h-10 rounded-lg flex items-center justify-center shrink-0 text-sm font-bold"
-              style={{ backgroundColor: "hsl(210, 100%, 65%, 0.12)", color: ACCENT }}
-            >
-              {lead.company_name.charAt(0).toUpperCase()}
-            </div>
-          )}
+        <Link href={`/dashboard/leads/${lead.id}`} className="flex items-center min-w-0 flex-1">
           <div className="min-w-0">
             <h2 className="text-base font-semibold leading-tight truncate" style={{ color: FG }}>
               {lead.company_name}

@@ -50,30 +50,13 @@ export default async function LeadDetailPage({ params }: { params: Promise<{ id:
 
       {/* Header */}
       <div className="rounded-2xl border border-white/10 p-6" style={{ backgroundColor: "#0d1118" }}>
-        <div className="flex items-start gap-4">
-          {lead.logo_url ? (
-            <img
-              src={lead.logo_url}
-              alt={`${lead.company_name} Logo`}
-              className="w-14 h-14 rounded-xl object-contain shrink-0"
-              style={{ backgroundColor: "hsl(220, 30%, 20%)" }}
-            />
-          ) : (
-            <div
-              className="w-14 h-14 rounded-xl flex items-center justify-center shrink-0 text-xl font-bold"
-              style={{ backgroundColor: "hsl(210, 100%, 65%, 0.12)", color: ACCENT }}
-            >
-              {lead.company_name.charAt(0).toUpperCase()}
-            </div>
-          )}
-          <div className="min-w-0 flex-1">
-            <div className="flex items-start justify-between gap-3 flex-wrap">
-              <div>
-                <h1 className="text-xl font-bold" style={{ color: FG }}>{lead.company_name}</h1>
-                {lead.industry && (
-                  <p className="text-sm mt-0.5" style={{ color: MUTED }}>{lead.industry}</p>
-                )}
-              </div>
+        <div className="flex items-start justify-between gap-3 flex-wrap">
+          <div>
+            <h1 className="text-xl font-bold" style={{ color: FG }}>{lead.company_name}</h1>
+            {lead.industry && (
+              <p className="text-sm mt-0.5" style={{ color: MUTED }}>{lead.industry}</p>
+            )}
+          </div>
               {lead.konfidenz_score !== null && lead.konfidenz_score !== undefined && (
                 <div className="flex items-center gap-1 px-3 py-1.5 rounded-full text-sm font-semibold"
                   style={{
@@ -96,14 +79,12 @@ export default async function LeadDetailPage({ params }: { params: Promise<{ id:
                   ⭐ {lead.konfidenz_score}/10 Konfidenz
                 </div>
               )}
-            </div>
-            {lead.description && (
-              <p className="text-sm leading-relaxed mt-3" style={{ color: FG }}>
-                {lead.description}
-              </p>
-            )}
-          </div>
         </div>
+        {lead.description && (
+          <p className="text-sm leading-relaxed mt-3" style={{ color: FG }}>
+            {lead.description}
+          </p>
+        )}
       </div>
 
       {/* Kontakt */}
