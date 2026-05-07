@@ -240,6 +240,18 @@ export default async function LeadDetailPage({ params }: { params: Promise<{ id:
         </div>
       )}
 
+      {/* Email-Copy */}
+      {lead.email_copy && (
+        <div className="rounded-2xl border border-white/10 p-6 space-y-4" style={{ backgroundColor: "#0d1118" }}>
+          <p className="text-xs font-medium uppercase tracking-wider" style={{ color: DIM }}>
+            Email-Entwurf
+          </p>
+          <pre className="text-sm leading-relaxed whitespace-pre-wrap font-sans" style={{ color: FG }}>
+            {lead.email_copy}
+          </pre>
+        </div>
+      )}
+
     </div>
   );
 }
